@@ -6,6 +6,7 @@ import { Home } from "./views/home";
 import { Demo } from "./views/demo";
 import { Single } from "./views/single";
 import injectContext from "./store/appContext";
+import { EditarEmpresa } from "./views/editarEmpresa";
 
 import { Sidebar } from "./component/sidebar";
 import { Footer } from "./component/footer";
@@ -36,6 +37,9 @@ const Layout = () => {
 						<Route exact path="/single/:theid">
 							<Single />
 						</Route>
+						<Route exact path="/editarEmpresa">
+							<EditarEmpresa />
+                            </Route>
 						<Route exact path="/empresas">
 							<AdminEmpresas />
 						</Route>
