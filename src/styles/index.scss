@@ -1,6 +1,177 @@
-/* 
-    General Styles
-*/
+//BOTONES
+.botonOutline{
+    background-color: white;
+    color: #0B8E73;
+    border-color: #0B8E73;
+}
+
+.botonOutline:focus{
+    box-shadow: 0 0 0 0.2rem rgba(11, 142, 115, 0.5);
+}
+
+.botonOutline:hover{
+    color: #fff;
+    text-decoration: none;
+    background-color: #05664F;
+}
+
+.boton{
+    background-color: #0B8E73;
+    color: #fff;
+}
+
+.boton:focus{
+    box-shadow: 0 0 0 0.2rem rgba(11, 142, 115, 0.5);
+}
+
+.boton:hover{
+    color: #fff;
+    text-decoration: none;
+    background-color: #05664F;
+}
+
+//LISTA
+.lista{
+    max-height: 450px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.itemLista{
+    background: #0CA789;
+}
+
+//INPUT
+.inputGris{
+    background: #E6E6E6;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.inputGris:active, .inputGris:focus{
+    box-shadow: 0 0 0 0.2rem rgba(11, 142, 115, 0.5);
+}
+
+//SCROLLBAR
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+//sidebar
+.contenedor {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.contenedor.activo {
+    padding-left: 250px;
+}
+
+.sidebar {
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    width: 0;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    background: #0CA789;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.contenedor.activo .sidebar {
+    width: 250px;
+}
+
+.contenedor-pagina {
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+}
+
+.contenedoractivo .contenedor-pagina {
+    position: absolute;
+    margin-right: -250px;
+}
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 250px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+@media(max-width:767px) {
+    .contenedor {
+        padding-left: 250px;
+    }
+
+    .contenedor.activo {
+        padding-left: 0;
+    }
+
+    .sidebar {
+        width: 250px;
+    }
+
+    .contenedor.activo .sidebar {
+        width: 0;
+    }
+
+    .contenedor-pagina {
+        padding: 20px;
+        position: relative;
+    }
+
+    .contenedor-activo .contenedor-pagina {
+        position: relative;
+        margin-right: 0;
+    }
+}
+
+.itemListaSidebar{
+    height: 80px;
+    color: #fff;
+    background: #0B8E73;
+    font-size: 22px;
+    font-weight: bold;
+    align-content: center;
+    margin: 7px 0px;
+}
+
+.itemListaSidebar:hover{
+    background: #05664F;
+}
+
+a:hover{
+    text-decoration: none;
+}
+
 .navbar{
     background: #0CA789;
 }
