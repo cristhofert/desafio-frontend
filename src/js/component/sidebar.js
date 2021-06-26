@@ -14,10 +14,12 @@ export const Sidebar = props => {
 						<p>Empresas</p>
 					</div>
 				</Link>
+				<Link to="/personas">
+					<div className="itemListaSidebar d-flex align-items-center justify-content-center">
+						<p>Personas</p>
+					</div>
+				</Link>
 
-				<div className="itemListaSidebar d-flex align-items-center justify-content-center">
-					<p>Personas</p>
-				</div>
 				<div className="itemListaSidebar d-flex align-items-center justify-content-center">
 					<p>Departamentos</p>
 				</div>

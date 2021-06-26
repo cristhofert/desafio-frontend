@@ -46,6 +46,6 @@ export const AdminEmpresas = () => (
 				</select>
 			</div>
 		</div>
-		<Lista />
+		<Lista tipo="empresas" />
 	</div>
 );

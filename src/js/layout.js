@@ -11,6 +11,7 @@ import { EditarEmpresa } from "./views/editarEmpresa";
 import { Sidebar } from "./component/sidebar";
 import { Footer } from "./component/footer";
 import { AdminEmpresas } from "./views/adminEmpresas";
+import { AdminPersonas } from "./views/adminPersonas";
 
 //create your first component
 const Layout = () => {
@@ -43,11 +44,13 @@ const Layout = () => {
 						<Route exact path="/empresas">
 							<AdminEmpresas />
 						</Route>
+						<Route exact path="/personas">
+							<AdminPersonas />
+						</Route>
 						<Route>
 							<h1>Not found!</h1>
 						</Route>
 					</Switch>
-					<Footer />
 				</ScrollToTop>
 			</BrowserRouter>
 		</div>

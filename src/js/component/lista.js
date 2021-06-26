@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
+import PropTypes from "prop-types";
 
-export const Lista = () => {
+export const Lista = props => {
 	const { store, actions } = useContext(Context);
 	return (
 		<div className="lista p-4 shadow my-2">
-			{store.empresas.length != 0
-				? store.empresas.map(itemLista => {
+			{store[props.tipo].length != 0
+				? store[props.tipo].map(itemLista => {
 						return (
 							<div key={itemLista.id} className="itemLista my-2 p-3 shadow">
 								<div className="row">
@@ -32,4 +33,8 @@ export const Lista = () => {
 				: "hol"}
 		</div>
 	);
+};
+
+Lista.propTypes = {
+	tipo: PropTypes.string
 };
