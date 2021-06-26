@@ -12,6 +12,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
+			],
+			empresas: [
+				{ nombre: "empresa1", id: 1 },
+				{ nombre: "empresa2", id: 2 },
+				{ nombre: "empresa3", id: 3 },
+				{ nombre: "empresa4", id: 4 },
+				{ nombre: "empresa5", id: 5 },
+				{ nombre: "empresa6", id: 6 },
+				{ nombre: "empresa7", id: 7 },
+				{ nombre: "empresa8", id: 8 }
 			]
 		},
 		actions: {
