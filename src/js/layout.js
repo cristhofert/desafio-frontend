@@ -12,6 +12,8 @@ import { Sidebar } from "./component/sidebar";
 import { Footer } from "./component/footer";
 import { AdminEmpresas } from "./views/adminEmpresas";
 import { AdminPersonas } from "./views/adminPersonas";
+import { Departamento } from "./views/departamento";
+import { Localidades } from "./views/localidades";
 
 //create your first component
 const Layout = () => {
@@ -40,12 +42,18 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/editarEmpresa">
 							<EditarEmpresa />
-                            </Route>
+						</Route>
 						<Route exact path="/empresas">
 							<AdminEmpresas />
 						</Route>
 						<Route exact path="/personas">
 							<AdminPersonas />
+						</Route>
+						<Route exact path="/departamentos">
+							<Departamento />
+						</Route>
+						<Route exact path="/departamentos/:id/localidades">
+							<Localidades />
 						</Route>
 						<Route>
 							<h1>Not found!</h1>

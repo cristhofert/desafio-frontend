@@ -19,13 +19,11 @@ export const Sidebar = props => {
 						<p>Personas</p>
 					</div>
 				</Link>
-
-				<div className="itemListaSidebar d-flex align-items-center justify-content-center">
-					<p>Departamentos</p>
-				</div>
-				<div className="itemListaSidebar d-flex align-items-center justify-content-center">
-					<p>Localidades</p>
-				</div>
+				<Link to="/departamentos">
+					<div className="itemListaSidebar d-flex align-items-center justify-content-center">
+						<p>Departamentos Localidades</p>
+					</div>
+				</Link>
 			</nav>
 			<nav className="navbar navbar-light bg-light">
 				<button
