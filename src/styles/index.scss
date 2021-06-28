@@ -190,3 +190,13 @@ a:hover{
 .footer{
     background: #0CA789;
 }
+
+ .div-derecha{
+    border-left: none;
+    }
+
+    @media screen and (min-width: 768px) {
+    .div-derecha {
+    border-left: 2px solid rgb(82, 116, 108);
+    }
+    }

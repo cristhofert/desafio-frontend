@@ -7,6 +7,7 @@ import { Demo } from "./views/demo";
 import { Single } from "./views/single";
 import injectContext from "./store/appContext";
 import { EditarEmpresa } from "./views/editarEmpresa";
+import { PerfilEmpresa } from "./views/perfilEmpresa";
 
 import { Sidebar } from "./component/sidebar";
 import { Footer } from "./component/footer";
@@ -54,6 +55,9 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/personas">
 							<AdminPersonas />
+						</Route>
+						<Route exact path="/perfilEmpresa">
+							<PerfilEmpresa />
 						</Route>
 						<Route>
 							<h1>Not found!</h1>
