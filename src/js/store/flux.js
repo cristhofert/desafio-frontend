@@ -1,17 +1,11 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
+			asociados: [
+				{ nombre: "asociado 1", id: 1 },
+				{ nombre: "asociado 2", id: 2 },
+				{ nombre: "asociado 3", id: 3 },
+				{ nombre: "asociado 4", id: 4 }
 			],
 			empresas: [
 				{ nombre: "empresa1", id: 1 },
