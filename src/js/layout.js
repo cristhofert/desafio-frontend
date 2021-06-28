@@ -14,6 +14,7 @@ import { AdminEmpresas } from "./views/adminEmpresas";
 import { AdminPersonas } from "./views/adminPersonas";
 import { AsociadosEmpresa } from "./views/asociadosEmpresa";
 import { AgregarAsociado } from "./views/agregarAsociado";
+import { CrearPersona } from "./views/crearPersona";
 
 //create your first component
 const Layout = () => {
@@ -54,6 +55,9 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/personas">
 							<AdminPersonas />
+						</Route>
+						<Route exact path="/personas/crear">
+							<CrearPersona />
 						</Route>
 						<Route>
 							<h1>Not found!</h1>
