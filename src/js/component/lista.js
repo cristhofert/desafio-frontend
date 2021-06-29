@@ -1,10 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import PropTypes from "prop-types";
 import { Link, useLocation } from "react-router-dom";
 
 export const Lista = props => {
 	const { store, actions } = useContext(Context);
+	const [info, setInfo] = useState(false);
 	const location = useLocation();
 	return (
 		<div className="lista p-4 shadow my-2">
@@ -39,13 +40,35 @@ export const Lista = props => {
 												Editar
 											</button>
 										) : (
-											<button type="button" className="btn botonOutline m-1">
-												Eliminar
-											</button>
+											<div>
+												<button
+													type="button"
+													className="btn botonOutline m-1"
+													onClick={() => {
+														setInfo(!info);
+													}}>
+													Ver más información
+												</button>
+												<button type="button" className="btn botonOutline m-1">
+													Eliminar
+												</button>
+											</div>
 										)}
 									</div>
 								</div>
 							</div>
+							{info ? (
+								<div>
+									<h5>Email</h5>
+									<p>empresa@gmail.com</p>
+									<h5>Celular</h5>
+									<p>098787654</p>
+									<h5>Estado</h5>
+									<p>Activo</p>
+								</div>
+							) : (
+								""
+							)}
 						</div>
 					);
 				})
