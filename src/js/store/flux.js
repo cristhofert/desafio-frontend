@@ -2,7 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			asociados: [
-				{ nombre: "asociado 1", id: 1 },
+				{ nombre: "Leandro Matonte", id: 1 },
 				{ nombre: "asociado 2", id: 2 },
 				{ nombre: "asociado 3", id: 3 },
 				{ nombre: "asociado 4", id: 4 }
