@@ -1,11 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Context } from "../store/appContext";
 
 export const CrearPersona = () => {
+	const { store, actions } = useContext(Context);
 	const [nombre, setNombre] = useState("");
 	const [apellido, setApellido] = useState("");
 	const [email, setEmail] = useState("");
 	const [celular, setCelular] = useState("");
 	const [estado, setEstado] = useState("activo");
+
+	const crearPersona = async () => {
+		let url = process.env.BACKEND_URL;
+
+		let body = {
+			nombre: nombre,
+			apellido: apellido,
+			email: email,
+			celular: celular,
+			estado: estado
+		};
+
+		let bodyJSON = JSON.stringify(body);
+
+		let options = {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: bodyJSON
+		};
+
+		const res = await fetch(url, options);
+		const data = await res.json();
+		store.personas.push(data);
+		setNombre("");
+		setApellido("");
+		setEmail("");
+		setCelular("");
+		setEstado("");
+	};
+
 	return (
 		<div className="container">
 			<h1 className="text-center mt-2">Crear Persona</h1>
@@ -77,7 +109,13 @@ export const CrearPersona = () => {
 						</select>
 					</div>
 					<div className="w-100 d-flex justify-content-center">
-						<button type="button" className="btn botonOutline py-2 my-1 text-center">
+						<button
+							onClick={e => {
+								e.preventDefault();
+								crearPersona();
+							}}
+							type="submit"
+							className="btn botonOutline py-2 my-1 text-center">
 							Guardar Persona
 						</button>
 					</div>
