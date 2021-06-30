@@ -17,13 +17,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				{ nombre: "empresa7", id: 7 },
 				{ nombre: "empresa8", id: 8 }
 			],
-			personas: [
-				{ nombre: "persona 1", id: 1 },
-				{ nombre: "persona 2", id: 2 },
-				{ nombre: "persona 3", id: 3 },
-				{ nombre: "persona 4", id: 4 },
-				{ nombre: "persona 5", id: 5 }
-			],
+			personas: [],
 			departamentos: [
 				{ nombre: "departamento1", id: 1 },
 				{ nombre: "departamento2", id: 2 },
@@ -46,28 +40,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 			]
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
+			loadSomeData: async () => {
+				const actions = getActions();
+				await actions.cargarPersonas();
 			},
-			loadSomeData: () => {
-				/**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
-			},
-			changeColor: (index, color) => {
-				//get the store
+			cargarPersonas: async () => {
 				const store = getStore();
+				let url = process.env.BACKEND_URL + "/persona";
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
+				let options = { method: "GET" };
+
+				const res = await fetch(url, options);
+				const data = await res.json();
+				store.personas = data;
+			},
+			obtenerPersonaPorID: async id => {
+				const store = getStore();
+				const res = await store.personas.find(persona => {
+					return persona.id == id;
 				});
-
-				//reset the global store
-				setStore({ demo: demo });
+				return res;
 			}
 		}
 	};

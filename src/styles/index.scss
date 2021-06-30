@@ -191,12 +191,24 @@ a:hover{
     background: #0CA789;
 }
 
- .div-derecha{
-    border-left: none;
-    }
+.contenedor-form{
+    max-width: 500px;
+    background: #0CA789;
+    box-shadow:  10px 10px 19px #bebebe,
+                -10px -10px 19px #eeeeee;
+}
 
-    @media screen and (min-width: 768px) {
+.label-claro{
+    font-size: 22px;
+    color: #fff;
+}
+
+.div-derecha{
+    border-left: none;
+}
+
+@media screen and (min-width: 768px) {
     .div-derecha {
-    border-left: 2px solid rgb(82, 116, 108);
+        border-left: 2px solid rgb(82, 116, 108);
     }
-    }
+}

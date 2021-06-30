@@ -17,6 +17,8 @@ import { Departamento } from "./views/departamento";
 import { Localidades } from "./views/localidades";
 import { AsociadosEmpresa } from "./views/asociadosEmpresa";
 import { AgregarAsociado } from "./views/agregarAsociado";
+import { CrearPersona } from "./views/crearPersona";
+import { EditarPersona } from "./views/editarPersona";
 import { AgregarDepartamento } from "./views/agregarDepartamento";
 import { AgregarLocalidad } from "./views/agregarLocalidad";
 import { EditarLocalidad } from "./views/editarLocalidad";
@@ -64,6 +66,12 @@ const Layout = () => {
 						<Route exact path="/personas">
 							<AdminPersonas />
 						</Route>
+						<Route exact path="/personas/crear">
+							<CrearPersona />
+						</Route>
+						<Route exact path="/personas/editar/:id">
+							<EditarPersona />
+                        </Route>
 						<Route exact path="/departamentos">
 							<Departamento />
 						</Route>
