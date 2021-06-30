@@ -18,16 +18,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				{ nombre: "empresa8", id: 8 }
 			],
 			personas: [],
-			departamentos: [
-				{ nombre: "departamento1", id: 1 },
-				{ nombre: "departamento2", id: 2 },
-				{ nombre: "departamento3", id: 3 },
-				{ nombre: "departamento4", id: 4 },
-				{ nombre: "departamento5", id: 5 },
-				{ nombre: "departamento6", id: 6 },
-				{ nombre: "departamento7", id: 7 },
-				{ nombre: "departamento8", id: 8 }
-			],
+			departamentos: [],
 			localidades: [
 				{ nombre: "localidades", id: 1 },
 				{ nombre: "localidades", id: 2 },
@@ -45,14 +36,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 				await actions.cargarPersonas();
 			},
 			cargarPersonas: async () => {
-				const store = getStore();
 				let url = process.env.BACKEND_URL + "/persona";
 
 				let options = { method: "GET" };
 
 				const res = await fetch(url, options);
 				const data = await res.json();
-				store.personas = data;
+				setStore({ personas: data });
 			},
 			obtenerPersonaPorID: async id => {
 				const store = getStore();
@@ -60,6 +50,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return persona.id == id;
 				});
 				return res;
+			},
+			cargarDepartamentos: async () => {
+				let url = process.env.BACKEND_URL + "/departamento";
+
+				let options = { method: "GET" };
+
+				const res = await fetch(url, options);
+				const data = await res.json();
+				setStore({ departamentos: data });
 			}
 		}
 	};

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import PropTypes from "prop-types";
 import { Link, useLocation } from "react-router-dom";
@@ -6,6 +6,14 @@ import { Item } from "../component/item";
 
 export const ListaDeItems = props => {
 	const { store, actions } = useContext(Context);
+
+	const cargarDatos = async () => {
+		await actions.cargarDepartamentos();
+	};
+
+	useEffect(() => {
+		cargarDatos();
+	}, []);
 
 	return (
 		<div className="lista p-4 shadow my-2">
