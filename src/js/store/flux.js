@@ -2,7 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			asociados: [
-				{ nombre: "asociado 1", id: 1 },
+				{ nombre: "Leandro Matonte", id: 1 },
 				{ nombre: "asociado 2", id: 2 },
 				{ nombre: "asociado 3", id: 3 },
 				{ nombre: "asociado 4", id: 4 }
@@ -17,7 +17,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 				{ nombre: "empresa7", id: 7 },
 				{ nombre: "empresa8", id: 8 }
 			],
-			personas: []
+			personas: [],
+			departamentos: [
+				{ nombre: "departamento1", id: 1 },
+				{ nombre: "departamento2", id: 2 },
+				{ nombre: "departamento3", id: 3 },
+				{ nombre: "departamento4", id: 4 },
+				{ nombre: "departamento5", id: 5 },
+				{ nombre: "departamento6", id: 6 },
+				{ nombre: "departamento7", id: 7 },
+				{ nombre: "departamento8", id: 8 }
+			],
+			localidades: [
+				{ nombre: "localidades", id: 1 },
+				{ nombre: "localidades", id: 2 },
+				{ nombre: "localidades", id: 3 },
+				{ nombre: "localidades", id: 4 },
+				{ nombre: "localidades", id: 5 },
+				{ nombre: "localidades", id: 6 },
+				{ nombre: "localidades", id: 7 },
+				{ nombre: "localidades", id: 8 }
+			]
 		},
 		actions: {
 			loadSomeData: async () => {
