@@ -13,8 +13,13 @@ import { Sidebar } from "./component/sidebar";
 import { Footer } from "./component/footer";
 import { AdminEmpresas } from "./views/adminEmpresas";
 import { AdminPersonas } from "./views/adminPersonas";
+import { Departamento } from "./views/departamento";
+import { Localidades } from "./views/localidades";
 import { AsociadosEmpresa } from "./views/asociadosEmpresa";
 import { AgregarAsociado } from "./views/agregarAsociado";
+import { AgregarDepartamento } from "./views/agregarDepartamento";
+import { AgregarLocalidad } from "./views/agregarLocalidad";
+import { EditarLocalidad } from "./views/editarLocalidad";
 
 //create your first component
 const Layout = () => {
@@ -41,6 +46,9 @@ const Layout = () => {
 						<Route exact path="/single/:theid">
 							<Single />
 						</Route>
+						<Route exact path="/editarEmpresa">
+							<EditarEmpresa />
+						</Route>
 						<Route exact path="/empresas">
 							<AdminEmpresas />
 						</Route>
@@ -56,8 +64,23 @@ const Layout = () => {
 						<Route exact path="/personas">
 							<AdminPersonas />
 						</Route>
+						<Route exact path="/departamentos">
+							<Departamento />
+						</Route>
+						<Route exact path="/localidades/:id/">
+							<EditarLocalidad />
+						</Route>
+						<Route exact path="/departamentos/:id/localidades">
+							<Localidades />
+						</Route>
+						<Route exact path="/departamentos/:id/localidades/nuevo">
+							<AgregarLocalidad />
+						</Route>
 						<Route exact path="/perfilEmpresa">
 							<PerfilEmpresa />
+						</Route>
+						<Route exact path="/departamentos/nuevo">
+							<AgregarDepartamento />
 						</Route>
 						<Route>
 							<h1>Not found!</h1>
