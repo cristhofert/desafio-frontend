@@ -16,7 +16,9 @@ export const Lista = props => {
 							<div className="row">
 								<div className="col-sm-12 col-md-8">
 									<div className="h-100 d-flex align-items-center">
-										<h3 className="text-light m-0">{itemLista.nombre}</h3>
+										<h3 className="text-light m-0">
+											{props.tipo == "empresas" ? itemLista.razon_social : itemLista.nombre}
+										</h3>
 									</div>
 								</div>
 								<div className="col-sm-12 col-md-4">
