@@ -18,7 +18,7 @@ export const ListaDeItems = props => {
 							nombre={itemLista.nombre}
 							primerBoton={props.primerBoton}
 							segundoBoton={props.segundoBoton}
-							primerBotonTo={`/departamentos/${itemLista.id}/localidades`}
+							primerBotonTo={props.primerBotonTo.replace(":id", itemLista.id)}
 						/>
 					);
 				})
@@ -34,5 +34,6 @@ export const ListaDeItems = props => {
 ListaDeItems.propTypes = {
 	tipo: PropTypes.string,
 	primerBoton: PropTypes.string,
+	primerBotonTo: PropTypes.string,
 	segundoBoton: PropTypes.string
 };

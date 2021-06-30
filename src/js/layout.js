@@ -18,6 +18,8 @@ import { Localidades } from "./views/localidades";
 import { AsociadosEmpresa } from "./views/asociadosEmpresa";
 import { AgregarAsociado } from "./views/agregarAsociado";
 import { AgregarDepartamento } from "./views/agregarDepartamento";
+import { AgregarLocalidad } from "./views/agregarLocalidad";
+import { EditarLocalidad } from "./views/editarLocalidad";
 
 //create your first component
 const Layout = () => {
@@ -65,8 +67,14 @@ const Layout = () => {
 						<Route exact path="/departamentos">
 							<Departamento />
 						</Route>
+						<Route exact path="/localidades/:id/">
+							<EditarLocalidad />
+						</Route>
 						<Route exact path="/departamentos/:id/localidades">
 							<Localidades />
+						</Route>
+						<Route exact path="/departamentos/:id/localidades/nuevo">
+							<AgregarLocalidad />
 						</Route>
 						<Route exact path="/perfilEmpresa">
 							<PerfilEmpresa />

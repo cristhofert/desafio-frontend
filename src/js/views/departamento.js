@@ -11,6 +11,11 @@ export const Departamento = () => (
 				</Link>
 			</div>
 		</div>
-		<ListaDeItems tipo="departamentos" primerBoton="Ver localidades" segundoBoton="Eliminar" />
+		<ListaDeItems
+			tipo="departamentos"
+			primerBoton="Ver localidades"
+			primerBotonTo="/departamentos/:id/localidades"
+			segundoBoton="Eliminar"
+		/>
 	</div>
 );

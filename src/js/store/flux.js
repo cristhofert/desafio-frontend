@@ -33,6 +33,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 				{ nombre: "departamento6", id: 6 },
 				{ nombre: "departamento7", id: 7 },
 				{ nombre: "departamento8", id: 8 }
+			],
+			localidades: [
+				{ nombre: "localidades", id: 1 },
+				{ nombre: "localidades", id: 2 },
+				{ nombre: "localidades", id: 3 },
+				{ nombre: "localidades", id: 4 },
+				{ nombre: "localidades", id: 5 },
+				{ nombre: "localidades", id: 6 },
+				{ nombre: "localidades", id: 7 },
+				{ nombre: "localidades", id: 8 }
 			]
 		},
 		actions: {
