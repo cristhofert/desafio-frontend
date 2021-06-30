@@ -35,9 +35,11 @@ export const Lista = props => {
 												Agregar
 											</button>
 										) : props.tipo != "asociados" ? (
-											<button type="button" className="btn botonOutline m-1">
-												Editar
-											</button>
+											<Link to={`/personas/editar/${itemLista.id}`}>
+												<button type="button" className="btn botonOutline m-1">
+													Editar
+												</button>
+											</Link>
 										) : (
 											<button type="button" className="btn botonOutline m-1">
 												Eliminar

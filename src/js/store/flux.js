@@ -26,13 +26,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			cargarPersonas: async () => {
 				const store = getStore();
-				let url = process.env.BACKEND_URL;
+				let url = process.env.BACKEND_URL + "/persona";
 
 				let options = { method: "GET" };
 
 				const res = await fetch(url, options);
 				const data = await res.json();
 				store.personas = data;
+			},
+			obtenerPersonaPorID: async id => {
+				const store = getStore();
+				const res = await store.personas.find(persona => {
+					return persona.id == id;
+				});
+				return res;
 			}
 		}
 	};
