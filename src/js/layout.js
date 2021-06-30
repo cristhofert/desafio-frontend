@@ -7,6 +7,7 @@ import { Demo } from "./views/demo";
 import { Single } from "./views/single";
 import injectContext from "./store/appContext";
 import { EditarEmpresa } from "./views/editarEmpresa";
+import { PerfilEmpresa } from "./views/perfilEmpresa";
 
 import { Sidebar } from "./component/sidebar";
 import { Footer } from "./component/footer";
@@ -14,6 +15,9 @@ import { AdminEmpresas } from "./views/adminEmpresas";
 import { AdminPersonas } from "./views/adminPersonas";
 import { Departamento } from "./views/departamento";
 import { Localidades } from "./views/localidades";
+import { AsociadosEmpresa } from "./views/asociadosEmpresa";
+import { AgregarAsociado } from "./views/agregarAsociado";
+import { AgregarDepartamento } from "./views/agregarDepartamento";
 
 //create your first component
 const Layout = () => {
@@ -46,6 +50,15 @@ const Layout = () => {
 						<Route exact path="/empresas">
 							<AdminEmpresas />
 						</Route>
+						<Route exact path="/editarEmpresa">
+							<EditarEmpresa />
+						</Route>
+						<Route exact path="/empresas/asociados">
+							<AsociadosEmpresa />
+						</Route>
+						<Route exact path="/empresas/agregar-asociado">
+							<AgregarAsociado />
+						</Route>
 						<Route exact path="/personas">
 							<AdminPersonas />
 						</Route>
@@ -54,6 +67,12 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/departamentos/:id/localidades">
 							<Localidades />
+						</Route>
+						<Route exact path="/perfilEmpresa">
+							<PerfilEmpresa />
+						</Route>
+						<Route exact path="/departamentos/nuevo">
+							<AgregarDepartamento />
 						</Route>
 						<Route>
 							<h1>Not found!</h1>
