@@ -1,33 +1,49 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ListaDeItems } from "../component/listaDeItems";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { Context } from "../store/appContext";
 
-export const Localidades = () => (
-	<div className="container">
-		<div className="row m-2">
-			<form className="form-inline">
-				<div className="form-row d-flex justify-content-between">
-					<div className="form-group">
-						<input type="text" className="form-control" id="nombre" placeholder="Nombre" />
-					</div>
-					<div className="form-group">
-						<input type="submit" className="form-control boton" id="cambiar" />
+export const Localidades = () => {
+	const params = useParams();
+	const { store, actions } = useContext(Context);
+
+	const cargarDatos = async () => {
+		await actions.obtenerLocalidades(params.id);
+	};
+
+	useEffect(() => {
+		cargarDatos();
+	}, []);
+
+	return (
+		<div className="container">
+			<div className="row">
+				<div className="col-sm-12 col-md-9">
+					<div className="py-2">
+						<input
+							type="text"
+							placeholder="Buscar Localidad"
+							className="inputGris form-control my-1"
+							id="buscador"
+						/>
 					</div>
 				</div>
-			</form>
-		</div>
-		<div className="row d-flex justify-content-center">
-			<div className="col-sm-12 col-md-3 my-auto ">
-				<Link type="button" className="btn boton py-2" to="/departamentos/1/localidades/nuevo">
-					Agregar Localidad
-				</Link>
+				<div className="col-sm-12 col-md-3">
+					<div className="py-2 d-flex justify-content-center align-items-center">
+						<Link to={`/departamentos/${params.id}/localidades/nuevo`}>
+							<button type="button" className="btn boton py-2 my-1">
+								Agregar Localidad
+							</button>
+						</Link>
+					</div>
+				</div>
 			</div>
+			<ListaDeItems
+				tipo="localidades"
+				primerBoton="Editar"
+				primerBotonTo="/localidades/:id/"
+				segundoBoton="Eliminar"
+			/>
 		</div>
-		<ListaDeItems
-			tipo="localidades"
-			primerBoton="Editar"
-			primerBotonTo="/localidades/:id/"
-			segundoBoton="Eliminar"
-		/>
-	</div>
-);
+	);
+};

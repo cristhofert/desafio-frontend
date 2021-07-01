@@ -60,17 +60,52 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const data = await res.json();
 				setStore({ departamentos: data });
 			},
+			agregarNuevaLocalidad: async (idDepartamento, nombre) => {
+				const store = getStore();
+				let url = process.env.BACKEND_URL + `/localidad/${idDepartamento}`;
+
+				const body = { nombre: nombre };
+				const bodyJSON = JSON.stringify(body);
+
+				let options = {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: bodyJSON
+				};
+
+				const res = await fetch(url, options);
+				const data = await res.json();
+
+				setStore({ localidades: [...store.localidades, data] });
+
+				return res.ok;
+			},
+			obtenerLocalidades: async idDepartamento => {
+				const url = process.env.BACKEND_URL + `/departamento/${idDepartamento}/localidades`;
+				const options = { method: "GET" };
+
+				const res = await fetch(url, options);
+				const localidadesDatos = await res.json();
+				setStore({ localidades: localidadesDatos });
+			},
+			obtenerLocalidadPorID: async () => {
+				const store = getStore();
+				const res = await store.personas.find(persona => {
+					return persona.id == id;
+				});
+				return res;
+			},
 			agregarDepartamento: async nombre => {
 				const store = getStore();
 				let url = process.env.BACKEND_URL + "/departamento";
 
 				let body = { nombre: nombre };
-				let bodyHTML = JSON.stringify(body);
+				let bodyJSON = JSON.stringify(body);
 
 				let options = {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
-					body: bodyHTML
+					body: bodyJSON
 				};
 
 				const res = await fetch(url, options);
