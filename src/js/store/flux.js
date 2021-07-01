@@ -59,6 +59,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const res = await fetch(url, options);
 				const data = await res.json();
 				setStore({ departamentos: data });
+			},
+			agregarDepartamento: async nombre => {
+				const store = getStore();
+				let url = process.env.BACKEND_URL + "/departamento";
+
+				let body = { nombre: nombre };
+				let bodyHTML = JSON.stringify(body);
+
+				let options = {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: bodyHTML
+				};
+
+				const res = await fetch(url, options);
+				const data = res.json();
+
+				setStore({ departamentos: [...store.departamentos, data] });
+				return res.ok;
 			}
 		}
 	};
