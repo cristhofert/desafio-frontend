@@ -8,6 +8,7 @@ import { Single } from "./views/single";
 import injectContext from "./store/appContext";
 import { EditarEmpresa } from "./views/editarEmpresa";
 import { PerfilEmpresa } from "./views/perfilEmpresa";
+import { CrearUsuario } from "./views/crearUsuario";
 
 import { Sidebar } from "./component/sidebar";
 import { Footer } from "./component/footer";
@@ -89,6 +90,9 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/departamentos/nuevo">
 							<AgregarDepartamento />
+						</Route>
+						<Route exact path="/crearUsuario">
+							<CrearUsuario />
 						</Route>
 						<Route>
 							<h1>Not found!</h1>
