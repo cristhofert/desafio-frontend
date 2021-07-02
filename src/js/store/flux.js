@@ -1,23 +1,37 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			asociados: [
-				{ nombre: "Leandro Matonte", id: 1 },
-				{ nombre: "asociado 2", id: 2 },
-				{ nombre: "asociado 3", id: 3 },
-				{ nombre: "asociado 4", id: 4 }
-			],
-
+			asociados: [],
 			empresas: [],
-			personas: [
-				{ nombre: "persona 1", id: 1 },
-				{ nombre: "persona 2", id: 2 },
-				{ nombre: "persona 3", id: 3 },
-				{ nombre: "persona 4", id: 4 },
-				{ nombre: "persona 5", id: 5 }
-			]
+			personas: []
 		},
 		actions: {
+			mapAsociados: async data => {
+				let asociados = [];
+				for (let index = 0; index < data.length; index++) {
+					const asociado = { ...data[index].persona, ...data[index].cargo };
+					asociados.push(asociado);
+				}
+				console.log(asociados, data);
+				return asociados;
+			},
+
+			getAsociados: async RUT => {
+				var myHeaders = new Headers();
+				myHeaders.append("Content-Type", "application/json");
+
+				var requestOptions = {
+					method: "GET",
+					headers: myHeaders,
+					redirect: "follow"
+				};
+
+				const res = await fetch(process.env.BACKEND_URL + "/empresa_persona/" + RUT, requestOptions);
+				const data = await res.json();
+				const asociados = await getActions().mapAsociados(data);
+				setStore({ asociados: asociados });
+			},
+
 			getEmpresas: async () => {
 				const store = getStore();
 				var myHeaders = new Headers();
@@ -35,64 +49,53 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.catch(error => console.log("error", error));
 			},
 
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
+			loadSomeData: async () => {
+				const actions = getActions();
+				await actions.cargarPersonas();
 			},
-			loadSomeData: () => {
-				/**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
+			cargarPersonas: async () => {
+				let url = process.env.BACKEND_URL + "/persona";
+
+				let options = { method: "GET" };
+
+				const res = await fetch(url, options);
+				const data = await res.json();
+				setStore({ personas: data });
 			},
-			actions: {
-				loadSomeData: async () => {
-					const actions = getActions();
-					await actions.cargarPersonas();
-				},
-				cargarPersonas: async () => {
-					let url = process.env.BACKEND_URL + "/persona";
+			obtenerPersonaPorID: async id => {
+				const store = getStore();
+				const res = await store.personas.find(persona => {
+					return persona.id == id;
+				});
+				return res;
+			},
+			cargarDepartamentos: async () => {
+				let url = process.env.BACKEND_URL + "/departamento";
 
-					let options = { method: "GET" };
+				let options = { method: "GET" };
 
-					const res = await fetch(url, options);
-					const data = await res.json();
-					setStore({ personas: data });
-				},
-				obtenerPersonaPorID: async id => {
-					const store = getStore();
-					const res = await store.personas.find(persona => {
-						return persona.id == id;
-					});
-					return res;
-				},
-				cargarDepartamentos: async () => {
-					let url = process.env.BACKEND_URL + "/departamento";
+				const res = await fetch(url, options);
+				const data = await res.json();
+				setStore({ departamentos: data });
+			},
+			agregarDepartamento: async nombre => {
+				const store = getStore();
+				let url = process.env.BACKEND_URL + "/departamento";
 
-					let options = { method: "GET" };
+				let body = { nombre: nombre };
+				let bodyHTML = JSON.stringify(body);
 
-					const res = await fetch(url, options);
-					const data = await res.json();
-					setStore({ departamentos: data });
-				},
-				agregarDepartamento: async nombre => {
-					const store = getStore();
-					let url = process.env.BACKEND_URL + "/departamento";
+				let options = {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: bodyHTML
+				};
 
-					let body = { nombre: nombre };
-					let bodyHTML = JSON.stringify(body);
+				const res = await fetch(url, options);
+				const data = res.json();
 
-					let options = {
-						method: "POST",
-						headers: { "Content-Type": "application/json" },
-						body: bodyHTML
-					};
-
-					const res = await fetch(url, options);
-					const data = res.json();
-
-					setStore({ departamentos: [...store.departamentos, data] });
-					return res.ok;
-				}
+				setStore({ departamentos: [...store.departamentos, data] });
+				return res.ok;
 			}
 		}
 	};
