@@ -1,12 +1,17 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import PropTypes from "prop-types";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 export const Lista = props => {
 	const { store, actions } = useContext(Context);
 	const [info, setInfo] = useState(false);
 	const location = useLocation();
+	const params = useParams();
+	const eliminar = idPersona => {
+		actions.eliminarAsociado(params.id, idPersona);
+	};
+
 	return (
 		<div className="lista p-4 shadow my-2">
 			{store[props.tipo].length != 0 ? (
@@ -60,7 +65,12 @@ export const Lista = props => {
 													}}>
 													Ver más información
 												</button>
-												<button type="button" className="btn botonOutline m-1">
+												<button
+													type="button"
+													className="btn botonOutline m-1"
+													onClick={() => {
+														eliminar(itemLista.id);
+													}}>
 													Eliminar
 												</button>
 											</div>
