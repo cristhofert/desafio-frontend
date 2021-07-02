@@ -6,6 +6,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 			personas: []
 		},
 		actions: {
+			eliminarAsociado: async (RUT, idPersona) => {
+				var myHeaders = new Headers();
+				myHeaders.append("Content-Type", "application/json");
+
+				var requestOptions = {
+					method: "DELETE",
+					headers: myHeaders,
+					redirect: "follow"
+				};
+
+				const res = await fetch(
+					process.env.BACKEND_URL +
+						`
+				/empresa_persona/${RUT}/${idPersona}`,
+					requestOptions
+				);
+				if (res.ok) {
+					const store = getStore();
+					const nuevosAsociados = store.asociados.filter(asociado => {
+						return asociado.id != idPersona;
+					});
+					setStore({ asociados: nuevosAsociados });
+				}
+			},
+
 			mapAsociados: async data => {
 				let asociados = [];
 				for (let index = 0; index < data.length; index++) {
