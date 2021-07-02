@@ -24,7 +24,7 @@ export const Lista = props => {
 								<div className="col-sm-12 col-md-4">
 									<div className="d-flex flex-column flex-md-row justify-content-end">
 										{props.tipo == "empresas" ? (
-											<Link to="/empresas/asociados">
+											<Link to={`/empresas/asociados/${itemLista.RUT}`}>
 												<button type="button" className="btn botonOutline m-1">
 													Asociados
 												</button>
