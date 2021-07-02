@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import PropTypes from "prop-types";
-import { Link, useLocation } from "react-router-dom";
 import { Item } from "../component/item";
 
 export const ListaDeItems = props => {
@@ -27,6 +26,7 @@ export const ListaDeItems = props => {
 							primerBoton={props.primerBoton}
 							segundoBoton={props.segundoBoton}
 							primerBotonTo={props.primerBotonTo.replace(":id", itemLista.id)}
+							tipo={props.tipo}
 						/>
 					);
 				})

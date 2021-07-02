@@ -19,16 +19,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			],
 			personas: [],
 			departamentos: [],
-			localidades: [
-				{ nombre: "localidades", id: 1 },
-				{ nombre: "localidades", id: 2 },
-				{ nombre: "localidades", id: 3 },
-				{ nombre: "localidades", id: 4 },
-				{ nombre: "localidades", id: 5 },
-				{ nombre: "localidades", id: 6 },
-				{ nombre: "localidades", id: 7 },
-				{ nombre: "localidades", id: 8 }
-			]
+			localidades: []
 		},
 		actions: {
 			loadSomeData: async () => {
@@ -88,12 +79,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const localidadesDatos = await res.json();
 				setStore({ localidades: localidadesDatos });
 			},
-			obtenerLocalidadPorID: async () => {
+			obtenerLocalidadPorIDBackEnd: async idLocalidad => {
 				const store = getStore();
-				const res = await store.personas.find(persona => {
-					return persona.id == id;
+				const url = process.env.BACKEND_URL + `/localidad/${idLocalidad}`;
+				const options = { method: "GET" };
+
+				const res = await fetch(url, options);
+				const localidad = await res.json();
+				setStore({ localidades: [...store.localidades, localidad] });
+			},
+			obtenerLocalidadPorID: async id => {
+				const store = getStore();
+				const res = await store.localidades.find(localidad => {
+					return localidad.id == id;
 				});
 				return res;
+			},
+			borrarLocalidad: async id => {
+				const store = getStore();
+				let url = process.env.BACKEND_URL + `/localidad/${id}`;
+
+				let options = { method: "DELETE" };
+
+				const res = await fetch(url, options);
+				let nuevoLocalidades = [];
+				if (res.ok) {
+					nuevoLocalidades = store.localidades.filter(localidad => {
+						return localidad.id != id;
+					});
+				}
+				setStore({ localidades: nuevoLocalidades });
 			},
 			agregarDepartamento: async nombre => {
 				const store = getStore();
@@ -113,6 +128,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				setStore({ departamentos: [...store.departamentos, data] });
 				return res.ok;
+			},
+			borrarDepartamento: async id => {
+				const store = getStore();
+				let url = process.env.BACKEND_URL + `/departamento/${id}`;
+
+				let options = { method: "DELETE" };
+
+				const res = await fetch(url, options);
+				let nuevoDepartamentos = [];
+				if (res.ok) {
+					nuevoDepartamentos = store.departamentos.filter(departamento => {
+						return departamento.id != id;
+					});
+				}
+				setStore({ departamentos: nuevoDepartamentos });
 			}
 		}
 	};

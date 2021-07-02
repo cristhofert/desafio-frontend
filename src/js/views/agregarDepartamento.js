@@ -6,6 +6,7 @@ export const AgregarDepartamento = () => {
 	const [error, setError] = useState(false);
 	const [correcto, setCorrecto] = useState(false);
 	const [nombre, setNombre] = useState("");
+	const [nombreMensaje, setNombreMensaje] = useState("");
 	const agregarNuevoDepartamento = async () => {
 		const res = await actions.agregarDepartamento(nombre);
 		if (!res) {
@@ -13,9 +14,7 @@ export const AgregarDepartamento = () => {
 		} else {
 			setError(false);
 			setCorrecto(true);
-			setTimeout(() => {
-				setCorrecto(false);
-			}, 3000);
+			setNombreMensaje(nombre);
 			setNombre("");
 		}
 	};
@@ -27,7 +26,7 @@ export const AgregarDepartamento = () => {
 					<h1 className="mt-3 text-center">Departamento Nuevo</h1>
 					{correcto ? (
 						<div className="my-3 alert alert-success" role="alert">
-							Departamento agregado correctamente
+							{`${nombreMensaje} agregado correctamente como Departamento`}
 						</div>
 					) : (
 						""
@@ -41,7 +40,12 @@ export const AgregarDepartamento = () => {
 					)}
 
 					<div className="d-flex justify-content-center">
-						<form className="w-75">
+						<form
+							onSubmit={e => {
+								e.preventDefault();
+								agregarNuevoDepartamento();
+							}}
+							className="w-75">
 							<div className="mb-3 mt-3">
 								<input
 									type="text"
@@ -53,7 +57,7 @@ export const AgregarDepartamento = () => {
 							</div>
 
 							<div className="justify-content-center d-flex">
-								<button onClick={agregarNuevoDepartamento} type="button" className="btn boton mb-5">
+								<button type="button" className="btn boton mb-5">
 									Agregar
 								</button>
 							</div>
