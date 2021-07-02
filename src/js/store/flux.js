@@ -1,27 +1,81 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			asociados: [
-				{ nombre: "Leandro Matonte", id: 1 },
-				{ nombre: "asociado 2", id: 2 },
-				{ nombre: "asociado 3", id: 3 },
-				{ nombre: "asociado 4", id: 4 }
-			],
-			empresas: [
-				{ nombre: "empresa1", id: 1 },
-				{ nombre: "empresa2", id: 2 },
-				{ nombre: "empresa3", id: 3 },
-				{ nombre: "empresa4", id: 4 },
-				{ nombre: "empresa5", id: 5 },
-				{ nombre: "empresa6", id: 6 },
-				{ nombre: "empresa7", id: 7 },
-				{ nombre: "empresa8", id: 8 }
-			],
 			personas: [],
 			departamentos: [],
-			localidades: []
+			localidades: [],
+			asociados: [],
+			empresas: []
 		},
 		actions: {
+			eliminarAsociado: async (RUT, idPersona) => {
+				var myHeaders = new Headers();
+				myHeaders.append("Content-Type", "application/json");
+
+				var requestOptions = {
+					method: "DELETE",
+					headers: myHeaders,
+					redirect: "follow"
+				};
+
+				const res = await fetch(
+					process.env.BACKEND_URL +
+						`
+				/empresa_persona/${RUT}/${idPersona}`,
+					requestOptions
+				);
+				if (res.ok) {
+					const store = getStore();
+					const nuevosAsociados = store.asociados.filter(asociado => {
+						return asociado.id != idPersona;
+					});
+					setStore({ asociados: nuevosAsociados });
+				}
+			},
+
+			mapAsociados: async data => {
+				let asociados = [];
+				for (let index = 0; index < data.length; index++) {
+					const asociado = { ...data[index].persona, ...data[index].cargo };
+					asociados.push(asociado);
+				}
+				console.log(asociados, data);
+				return asociados;
+			},
+
+			getAsociados: async RUT => {
+				var myHeaders = new Headers();
+				myHeaders.append("Content-Type", "application/json");
+
+				var requestOptions = {
+					method: "GET",
+					headers: myHeaders,
+					redirect: "follow"
+				};
+
+				const res = await fetch(process.env.BACKEND_URL + "/empresa_persona/" + RUT, requestOptions);
+				const data = await res.json();
+				const asociados = await getActions().mapAsociados(data);
+				setStore({ asociados: asociados });
+			},
+
+			getEmpresas: async () => {
+				const store = getStore();
+				var myHeaders = new Headers();
+				myHeaders.append("Content-Type", "application/json");
+
+				var requestOptions = {
+					method: "GET",
+					headers: myHeaders,
+					redirect: "follow"
+				};
+
+				fetch(process.env.BACKEND_URL + "/empresa", requestOptions)
+					.then(response => response.json())
+					.then(result => setStore({ empresas: result }))
+					.catch(error => console.log("error", error));
+			},
+
 			loadSomeData: async () => {
 				const actions = getActions();
 				await actions.cargarPersonas();
