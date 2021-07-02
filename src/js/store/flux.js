@@ -7,9 +7,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 				{ nombre: "asociado 3", id: 3 },
 				{ nombre: "asociado 4", id: 4 }
 			],
-
 			empresas: [],
 			personas: [
+				{ nombre: "persona 1", id: 1 },
+				{ nombre: "persona 2", id: 2 },
+				{ nombre: "persona 3", id: 3 },
+				{ nombre: "persona 4", id: 4 },
+				{ nombre: "persona 5", id: 5 }
+			],
+			asociados: [
 				{ nombre: "persona 1", id: 1 },
 				{ nombre: "persona 2", id: 2 },
 				{ nombre: "persona 3", id: 3 },

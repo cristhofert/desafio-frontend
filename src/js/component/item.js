@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
@@ -13,12 +13,20 @@ export const Item = props => {
 				</div>
 				<div className="col-sm-12 col-md-4">
 					<div className="d-flex flex-column flex-md-row justify-content-end">
-						<Link type="button" className="btn botonOutline m-1" to={props.primerBotonTo}>
-							{props.primerBoton}
-						</Link>
-						<button type="button" className="btn botonOutline m-1">
-							{props.segundoBoton}
-						</button>
+						{props.primerBoton ? (
+							<Link type="button" className="btn botonOutline m-1" to={props.primerBotonTo}>
+								{props.primerBoton}
+							</Link>
+						) : (
+							""
+						)}
+						{props.segundoBoton ? (
+							<button type="button" className="btn botonOutline m-1">
+								{props.segundoBoton}
+							</button>
+						) : (
+							""
+						)}
 					</div>
 				</div>
 			</div>
