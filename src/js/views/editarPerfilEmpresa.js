@@ -1,9 +1,15 @@
 import React, { useState, useContext, useEffect } from "react";
 import rigoImage from "../../img/rigo-baby.jpg";
 import { Context } from "../store/appContext";
+import { useHistory } from "react-router-dom";
 
 export const EditarPerfilEmpresa = () => {
 	const { store, actions } = useContext(Context);
+	const history = useHistory();
+
+	useEffect(() => {
+		actions.getMiEmpresa();
+	}, []);
 
 	return (
 		<div className="container">
@@ -22,8 +28,8 @@ export const EditarPerfilEmpresa = () => {
 									type="text"
 									className="form-control"
 									id="inputEmail4"
-									onChange={e => actions.setEmpresa({ nombre_fantacia: e.target.value })}
-									value={store.empresa.nombre_fantacia}
+									onChange={e => actions.setEmpresa({ nombre_fantasia: e.target.value })}
+									value={store.empresa.nombre_fantasia}
 								/>
 							</div>
 							<div className="form-group col-md-6">
@@ -66,13 +72,7 @@ export const EditarPerfilEmpresa = () => {
 						<div className="form-row">
 							<div className="form-group col-md-6">
 								<label htmlFor="inputEmail4">Número de RUT</label>
-								<input
-									type="number"
-									className="form-control"
-									id="inputEmail4"
-									onChange={e => actions.setEmpresa({ RUT: e.target.value })}
-									value={store.empresa.RUT}
-								/>
+								<p>{store.empresa.RUT}</p>
 							</div>
 							<div className="form-group col-md-6">
 								<label htmlFor="inputPassword4">Teléfono</label>
@@ -229,7 +229,7 @@ export const EditarPerfilEmpresa = () => {
 										type="button"
 										className="btn btn-success mb-3"
 										onClick={() => {
-											actions.actualizarMiEmpresa();
+											actions.actualizarMiEmpresa().then(() => history.push("/perfilEmpresa"));
 										}}>
 										Guardar cambios
 									</button>

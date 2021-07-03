@@ -1,11 +1,12 @@
 import React, { useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
+import { Link } from "react-router-dom";
 
 export const PerfilEmpresa = () => {
 	const { store, actions } = useContext(Context);
 
 	useEffect(() => {
-		//actions.getMiEmpresa();
+		actions.getMiEmpresa();
 	}, []);
 
 	return (
@@ -23,9 +24,9 @@ export const PerfilEmpresa = () => {
 					</div>
 					<div className="col-md-3">
 						<div className="h-100 d-flex align-items-end">
-							<button type="button" className="btn boton mb-1">
+							<Link type="button" className="btn boton mb-1" to="/perfilEmpresa/editar">
 								Editar perfil
-							</button>
+							</Link>
 						</div>
 					</div>
 				</div>

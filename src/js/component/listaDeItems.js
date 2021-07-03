@@ -6,14 +6,6 @@ import { Item } from "../component/item";
 export const ListaDeItems = props => {
 	const { store, actions } = useContext(Context);
 
-	const cargarDatos = async () => {
-		await actions.cargarDepartamentos();
-	};
-
-	useEffect(() => {
-		cargarDatos();
-	}, []);
-
 	return (
 		<div className="lista p-4 shadow my-2">
 			{store[props.tipo].length > 0 ? (
@@ -25,7 +17,8 @@ export const ListaDeItems = props => {
 							nombre={itemLista.nombre}
 							primerBoton={props.primerBoton}
 							segundoBoton={props.segundoBoton}
-							primerBotonTo={props.primerBotonTo.replace(":id", itemLista.id)}
+							segundoBotonClick={props.segundoBotonClick}
+							primerBotonTo={props.primerBotonTo ? props.primerBotonTo.replace(":id", itemLista.id) : ""}
 							tipo={props.tipo}
 						/>
 					);
@@ -43,5 +36,6 @@ ListaDeItems.propTypes = {
 	tipo: PropTypes.string,
 	primerBoton: PropTypes.string,
 	primerBotonTo: PropTypes.string,
-	segundoBoton: PropTypes.string
+	segundoBoton: PropTypes.string,
+	segundoBotonClick: PropTypes.func
 };

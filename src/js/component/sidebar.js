@@ -26,6 +26,20 @@ export const Sidebar = props => {
 						</div>
 					</div>
 				</Link>
+				<Link to="/asociados">
+					<div className="itemListaSidebar d-flex align-items-center justify-content-center">
+						<div className="text-center">
+							<p>asociados</p>
+						</div>
+					</div>
+				</Link>
+				<Link to="/perfilEmpresa">
+					<div className="itemListaSidebar d-flex align-items-center justify-content-center">
+						<div className="text-center">
+							<p>perfilEmpresa</p>
+						</div>
+					</div>
+				</Link>
 			</nav>
 			<nav className="navbar navbar-light bg-light">
 				<button

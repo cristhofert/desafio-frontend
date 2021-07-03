@@ -5,6 +5,7 @@ import { Context } from "../store/appContext";
 
 export const Item = props => {
 	const { store, actions } = useContext(Context);
+
 	const handleClick = id => {
 		if (props.tipo == "localidades") {
 			actions.borrarLocalidad(id);
@@ -30,7 +31,10 @@ export const Item = props => {
 							""
 						)}
 						{props.segundoBoton ? (
-							<button type="button" className="btn botonOutline m-1">
+							<button
+								type="button"
+								className="btn botonOutline m-1"
+								onClick={e => props.segundoBotonClick(e, props)}>
 								{props.segundoBoton}
 							</button>
 						) : (
@@ -49,5 +53,6 @@ Item.propTypes = {
 	primerBoton: PropTypes.string,
 	segundoBoton: PropTypes.string,
 	primerBotonTo: PropTypes.string,
-	tipo: PropTypes.string
+	tipo: PropTypes.string,
+	segundoBotonClick: PropTypes.func
 };

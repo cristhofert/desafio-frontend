@@ -15,27 +15,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 				{ nombre: "persona 5", id: 5 }
 			],
 			empresa: {
-				razon_social: "a",
-				nombre_fantasia: "a",
-				RUT: "a",
-				email: "a",
-				celular: "a",
-				telefono: "a",
-				nro_BPS: "a",
-				nro_referencia: "a",
-				actividad_principal: "a",
-				actividad_secunadria: "a",
-				fecha_afiliacion: "a",
-				fecha_inicio_empresa: "a",
-				estado: "a",
-				fecha_de_baja: "a",
-				observaciones: "a",
-				imagen: "a",
-				direccion: "a"
+				razon_social: "Cargando...",
+				nombre_fantasia: "Cargando...",
+				RUT: "Cargando...",
+				direccion: "Cargando...",
+				email: "Cargando...",
+				celular: "Cargando...",
+				telefono: "Cargando...",
+				nro_BPS: "Cargando...",
+				nro_referencia: "Cargando...",
+				actividad_principal: "Cargando...",
+				actividad_secunadria: "Cargando...",
+				fecha_afiliacion: "2021-07-15",
+				fecha_inicio_empresa: "2021-07-15",
+				estado: "Cargando...",
+				fecha_de_baja: "2021-07-07",
+				observaciones: "Cargando...",
+				imagen: "Cargando..."
 			},
 			departamentos: [],
 			localidades: [],
-			empresas: []
+			empresas: [],
+			user: {}
 		},
 		actions: {
 			eliminarAsociado: async (RUT, idPersona) => {
@@ -180,8 +181,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				fetch(`${process.env.BACKEND_URL}/mi_empresa`, requestOptions)
 					.then(response => response.json())
-					.then(result => setStore({ miEmpresa: result }))
-					.catch(error => console.log("error", error));
+					.then(result => setStore({ empresa: result }))
+					.catch(error => console.error("error", error));
 			},
 			actualizarMiEmpresa: () => {
 				var myHeaders = new Headers();
@@ -189,6 +190,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				myHeaders.append("Authorization", sessionStorage.getItem("token"));
 
 				var raw = JSON.stringify(getStore().empresa);
+				console.log(raw);
 
 				var requestOptions = {
 					method: "PUT",
@@ -197,9 +199,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					redirect: "follow"
 				};
 
-				fetch(`${process.env.BACKEND_URL}/mi_empresa`, requestOptions)
+				return fetch(`${process.env.BACKEND_URL}/mi_empresa`, requestOptions)
 					.then(response => response.json())
-					.then(result => console.log(result))
+					.then(result => getActions().getMiEmpresa())
 					.catch(error => console.log("error", error));
 			},
 			setEmpresa: empresa => {
@@ -307,6 +309,66 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 				}
 				setStore({ departamentos: nuevoDepartamentos });
+			},
+			getMiAsociados: () => {
+				var myHeaders = new Headers();
+				myHeaders.append("Content-Type", "application/json");
+				myHeaders.append("Authorization", sessionStorage.getItem("token"));
+
+				var requestOptions = {
+					method: "GET",
+					headers: myHeaders,
+					redirect: "follow"
+				};
+
+				return fetch(process.env.BACKEND_URL + "/asociados/", requestOptions)
+					.then(res => res.json())
+					.then(data => getActions().mapAsociados(data))
+					.then(asociados => setStore({ asociados }))
+					.catch(err => err);
+			},
+			agregarMiAsociado: (cargo, personaId) => {
+				var myHeaders = new Headers();
+				myHeaders.append("Content-Type", "application/json");
+				myHeaders.append("Authorization", sessionStorage.getItem("token"));
+
+				var raw = JSON.stringify({ cargo, personaId });
+				var requestOptions = {
+					method: "POST",
+					headers: myHeaders,
+					body: raw,
+					redirect: "follow"
+				};
+
+				return fetch(process.env.BACKEND_URL + "/asociados/nuevo", requestOptions)
+					.then(response => response.json())
+					.then(result => result)
+					.catch(error => console.log("error", error));
+			},
+			login: (username, password) => {
+				var myHeaders = new Headers();
+				myHeaders.append("Content-Type", "application/json");
+
+				var raw = JSON.stringify({
+					username,
+					password
+				});
+
+				var requestOptions = {
+					method: "POST",
+					headers: myHeaders,
+					body: raw,
+					redirect: "follow"
+				};
+
+				fetch(process.env.BACKEND_URL + "/login", requestOptions)
+					.then(response => response.json())
+					.then(result => {
+						setStore({ user: result.user });
+						sessionStorage.setItem("token", result.token);
+						console.log("loged in ", result);
+					})
+					.catch(error => console.log("error", error));
 			}
 		}
 	};
