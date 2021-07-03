@@ -1,11 +1,16 @@
 import React, { useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { Context } from "../store/appContext";
+import PropTypes from "prop-types";
 
-export const ToLogout = () => {
+export const ToLogout = props => {
 	const { store, actions } = useContext(Context);
+	const history = useHistory();
 
 	const logout = () => {
 		actions.logout();
+		props.activarSidebar(false);
+		history.push("/");
 	};
 
 	return (
@@ -19,4 +24,8 @@ export const ToLogout = () => {
 			)}
 		</div>
 	);
+};
+
+ToLogout.propTypes = {
+	activarSidebar: PropTypes.func
 };

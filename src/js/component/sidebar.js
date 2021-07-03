@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { ToLogout } from "./ToLogout";
@@ -6,14 +6,25 @@ import { Context } from "../store/appContext";
 
 export const Sidebar = props => {
 	const { store, actions } = useContext(Context);
+	const cargarDatos = () => {
+		if (!store.user.username) {
+			actions.obtenerInfoUsuario(sessionStorage.getItem("username"));
+		}
+	};
+
+	useEffect(
+		() => {
+			cargarDatos();
+		},
+		[store.user]
+	);
 
 	return (
 		<div>
 			<nav className="sidebar h-100">
-				<div
-					className="d-flex justify-content-center align-items-center text-light"
-					style={{ height: "110px" }}>
+				<div>
 					<img
+						className="mt-2 logo"
 						alt="Centro Comercial e Industrial de San José"
 						src="https://ccisanjose.com.uy/wp-content/uploads/2021/04/cropped-CCISJ-logo-sin-fondo-blanco-e1618519493910.png"
 						width="200px"
@@ -79,7 +90,7 @@ export const Sidebar = props => {
 					className="btn boton m-1">
 					{props.estadoSidebar ? <i className="fas fa-times" /> : <i className="fas fa-bars" />}
 				</button>
-				<ToLogout />
+				<ToLogout activarSidebar={props.activarSidebar} />
 			</nav>
 		</div>
 	);
