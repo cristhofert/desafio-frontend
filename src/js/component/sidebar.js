@@ -27,7 +27,6 @@ export const Sidebar = props => {
 						className="mt-2 logo"
 						alt="Centro Comercial e Industrial de San José"
 						src="https://ccisanjose.com.uy/wp-content/uploads/2021/04/cropped-CCISJ-logo-sin-fondo-blanco-e1618519493910.png"
-						width="200px"
 					/>
 				</div>
 				{store.user.is_admin ? (
@@ -46,13 +45,6 @@ export const Sidebar = props => {
 							<div className="itemListaSidebar d-flex align-items-center justify-content-center">
 								<div className="text-center">
 									<p>Departamentos y Localidades</p>
-								</div>
-							</div>
-						</Link>
-						<Link to="/">
-							<div className="itemListaSidebar d-flex align-items-center justify-content-center">
-								<div className="text-center">
-									<p>Reportes</p>
 								</div>
 							</div>
 						</Link>

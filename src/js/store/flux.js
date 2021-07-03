@@ -28,6 +28,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 			user: {}
 		},
 		actions: {
+			eliminarEmpresa: async RUT => {
+				const store = getStore();
+				let url =
+					process.env.BACKEND_URL +
+					`
+				/empresa/${RUT}`;
+
+				let options = { method: "DELETE" };
+
+				const res = await fetch(url, options);
+				let nuevaEmpresa = [];
+				if (res.ok) {
+					nuevaEmpresa = store.empresas.filter(empresa => {
+						return empresa.RUT != RUT;
+					});
+				}
+				setStore({ empresas: nuevaEmpresa });
+			},
+
 			eliminarAsociado: async (RUT, idPersona) => {
 				var myHeaders = new Headers();
 				myHeaders.append("Content-Type", "application/json");
