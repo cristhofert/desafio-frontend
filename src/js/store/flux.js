@@ -361,14 +361,57 @@ const getState = ({ getStore, getActions, setStore }) => {
 					redirect: "follow"
 				};
 
-				fetch(process.env.BACKEND_URL + "/login", requestOptions)
+				return fetch(process.env.BACKEND_URL + "/login", requestOptions)
+					.then(res => {
+						if (res.ok) res;
+						else throw res.json();
+					})
 					.then(response => response.json())
 					.then(result => {
 						setStore({ user: result.user });
 						sessionStorage.setItem("token", result.token);
-						console.log("loged in ", result);
-					})
-					.catch(error => console.log("error", error));
+					});
+			},
+			logout: () => {
+				sessionStorage.removeItem("token");
+				setStore({
+					asociados: [
+						{ nombre: "Leandro Matonte", id: 1 },
+						{ nombre: "asociado 2", id: 2 },
+						{ nombre: "asociado 3", id: 3 },
+						{ nombre: "asociado 4", id: 4 }
+					],
+					personas: [
+						{ nombre: "persona 1", id: 1 },
+						{ nombre: "persona 2", id: 2 },
+						{ nombre: "persona 3", id: 3 },
+						{ nombre: "persona 4", id: 4 },
+						{ nombre: "persona 5", id: 5 }
+					],
+					empresa: {
+						razon_social: "Cargando...",
+						nombre_fantasia: "Cargando...",
+						RUT: "Cargando...",
+						direccion: "Cargando...",
+						email: "Cargando...",
+						celular: "Cargando...",
+						telefono: "Cargando...",
+						nro_BPS: "Cargando...",
+						nro_referencia: "Cargando...",
+						actividad_principal: "Cargando...",
+						actividad_secunadria: "Cargando...",
+						fecha_afiliacion: "2021-07-15",
+						fecha_inicio_empresa: "2021-07-15",
+						estado: "Cargando...",
+						fecha_de_baja: "2021-07-07",
+						observaciones: "Cargando...",
+						imagen: "Cargando..."
+					},
+					departamentos: [],
+					localidades: [],
+					empresas: [],
+					user: {}
+				});
 			}
 		}
 	};
