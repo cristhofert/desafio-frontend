@@ -29,14 +29,21 @@ export const Sidebar = props => {
 				<Link to="/asociados">
 					<div className="itemListaSidebar d-flex align-items-center justify-content-center">
 						<div className="text-center">
-							<p>asociados</p>
+							<p>Asociados</p>
 						</div>
 					</div>
 				</Link>
 				<Link to="/perfilEmpresa">
 					<div className="itemListaSidebar d-flex align-items-center justify-content-center">
 						<div className="text-center">
-							<p>perfilEmpresa</p>
+							<p>Perfil Empresa</p>
+						</div>
+					</div>
+				</Link>
+				<Link to="/">
+					<div className="itemListaSidebar d-flex align-items-center justify-content-center">
+						<div className="text-center">
+							<p>Reportes</p>
 						</div>
 					</div>
 				</Link>
