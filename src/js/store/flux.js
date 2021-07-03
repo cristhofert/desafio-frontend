@@ -345,35 +345,38 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(result => result)
 					.catch(error => console.log("error", error));
 			},
-			login: (username, password) => {
-				var myHeaders = new Headers();
-				myHeaders.append("Content-Type", "application/json");
+			obtenerInfoUsuario: async username => {
+				let url = process.env.BACKEND_URL + "/user/" + username;
 
-				var raw = JSON.stringify({
-					username,
-					password
-				});
+				let options = { method: "GET", headers: { "Content-Type": "application/json" } };
 
-				var requestOptions = {
+				const res = await fetch(url, options);
+				const data = await res.json();
+				setStore({ user: data });
+			},
+			login: async (username, password) => {
+				let url = process.env.BACKEND_URL + "/login";
+
+				const body = { username: username, password: password };
+				const bodyJSON = JSON.stringify(body);
+
+				let options = {
 					method: "POST",
-					headers: myHeaders,
-					body: raw,
-					redirect: "follow"
+					headers: { "Content-Type": "application/json" },
+					body: bodyJSON
 				};
 
-				return fetch(process.env.BACKEND_URL + "/login", requestOptions)
-					.then(res => {
-						if (res.ok) res;
-						else throw res.json();
-					})
-					.then(response => response.json())
-					.then(result => {
-						setStore({ user: result.user });
-						sessionStorage.setItem("token", result.token);
-					});
+				const res = await fetch(url, options);
+				const data = await res.json();
+				setStore({ user: data.user });
+				sessionStorage.setItem("token", data.token);
+				sessionStorage.setItem("username", data.user.username);
+
+				return res.ok;
 			},
 			logout: () => {
 				sessionStorage.removeItem("token");
+				sessionStorage.removeItem("username");
 				setStore({
 					asociados: [
 						{ nombre: "Leandro Matonte", id: 1 },

@@ -1,9 +1,11 @@
 import React, { useRef, useContext, useState } from "react";
-import rigoImage from "../../img/rigo-baby.jpg";
+import { useHistory } from "react-router-dom";
 import { Context } from "../store/appContext";
+import PropTypes from "prop-types";
 
-export const Home = () => {
+export const Login = props => {
 	const { store, actions } = useContext(Context);
+	const history = useHistory();
 	const username = useRef(null);
 	const passwd = useRef(null);
 	const [alert, setAlert] = useState("");
@@ -22,7 +24,18 @@ export const Home = () => {
 					<div className="col-6 shadow" id="fondoLogin">
 						<h1 className="mt-3 text-center">Inicio de Sesión</h1>
 						<div className="d-flex justify-content-center">
-							<form className="w-75">
+							<form
+								onSubmit={async e => {
+									e.preventDefault();
+									const ok = await actions.login(username.current.value, passwd.current.value);
+									if (!ok) {
+										setAlert("Usuario o contraseña equivocado");
+									} else {
+										props.activarSidebar(true);
+										history.push("/empresas");
+									}
+								}}
+								className="w-75">
 								<div className="mb-3 mt-3">
 									<label htmlFor="exampleInputEmail1" className="form-label">
 										Nombre de usuario
@@ -47,14 +60,7 @@ export const Home = () => {
 									/>
 								</div>
 								<div className="justify-content-center d-flex">
-									<button
-										type="button"
-										className="btn btn-light mb-5"
-										onClick={() => {
-											actions.login(username.current.value, passwd.current.value).catch(error => {
-												setAlert("Usuario o contraceña equivocado");
-											});
-										}}>
+									<button type="submit" className="btn btn-light mb-5">
 										Aceptar
 									</button>
 								</div>
@@ -67,4 +73,8 @@ export const Home = () => {
 			)}
 		</div>
 	);
+};
+
+Login.propTypes = {
+	activarSidebar: PropTypes.func
 };
