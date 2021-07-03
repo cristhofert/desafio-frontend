@@ -67,7 +67,7 @@ const Layout = () => {
 						<Route exact path="/editarEmpresa">
 							<EditarEmpresa />
 						</Route>
-						<Route exact path="/empresas/asociados">
+						<Route exact path="/empresas/asociados/:id">
 							<AsociadosEmpresa />
 						</Route>
 						<Route exact path="/empresas/agregar-asociado">

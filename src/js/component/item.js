@@ -1,10 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 export const Item = props => {
+	const { store, actions } = useContext(Context);
+	const handleClick = id => {
+		if (props.tipo == "localidades") {
+			actions.borrarLocalidad(id);
+		} else if (props.tipo == "departamentos") {
+			actions.borrarDepartamento(id);
+		}
+	};
 	return (
-		<div key={props.id} className="itemLista my-2 p-3 shadow">
+		<div className="itemLista my-2 p-3 shadow">
 			<div className="row">
 				<div className="col-sm-12 col-md-8">
 					<div className="h-100 d-flex align-items-center">
@@ -39,5 +48,6 @@ Item.propTypes = {
 	nombre: PropTypes.string,
 	primerBoton: PropTypes.string,
 	segundoBoton: PropTypes.string,
-	primerBotonTo: PropTypes.string
+	primerBotonTo: PropTypes.string,
+	tipo: PropTypes.string
 };
