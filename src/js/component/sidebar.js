@@ -37,6 +37,13 @@ export const Sidebar = props => {
 								</div>
 							</div>
 						</Link>
+						<Link to="/">
+							<div className="itemListaSidebar d-flex align-items-center justify-content-center">
+								<div className="text-center">
+									<p>Reportes</p>
+								</div>
+							</div>
+						</Link>
 					</>
 				) : (
 					""
