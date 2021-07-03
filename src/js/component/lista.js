@@ -8,8 +8,10 @@ export const Lista = props => {
 	const [info, setInfo] = useState(false);
 	const location = useLocation();
 	const params = useParams();
+
 	const eliminar = idPersona => {
-		actions.eliminarAsociado(params.id, idPersona);
+		if (params.id) actions.eliminarAsociado(params.id, idPersona);
+		else actions.eliminarAsociado(store.user.empresa.RUT, idPersona);
 	};
 
 	return (

@@ -8,6 +8,7 @@ import { Single } from "./views/single";
 import injectContext from "./store/appContext";
 import { EditarEmpresa } from "./views/editarEmpresa";
 import { PerfilEmpresa } from "./views/perfilEmpresa";
+import { EditarPerfilEmpresa } from "./views/editarPerfilEmpresa";
 import { CrearUsuario } from "./views/crearUsuario";
 
 import { Sidebar } from "./component/sidebar";
@@ -23,6 +24,8 @@ import { EditarPersona } from "./views/editarPersona";
 import { AgregarDepartamento } from "./views/agregarDepartamento";
 import { AgregarLocalidad } from "./views/agregarLocalidad";
 import { EditarLocalidad } from "./views/editarLocalidad";
+import { Asociado } from "./views/asociado";
+import { AsociadoNuevo } from "./views/AsociadoNuevo";
 
 //create your first component
 const Layout = () => {
@@ -45,6 +48,12 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/demo">
 							<Demo />
+						</Route>
+						<Route exact path="/asociados">
+							<Asociado />
+						</Route>
+						<Route exact path="/asociados/agregar">
+							<AsociadoNuevo />
 						</Route>
 						<Route exact path="/single/:theid">
 							<Single />
@@ -87,6 +96,9 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/perfilEmpresa">
 							<PerfilEmpresa />
+						</Route>
+						<Route exact path="/perfilEmpresa/editar">
+							<EditarPerfilEmpresa />
 						</Route>
 						<Route exact path="/departamentos/nuevo">
 							<AgregarDepartamento />

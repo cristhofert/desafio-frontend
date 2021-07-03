@@ -1,6 +1,14 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
+import { Context } from "../store/appContext";
+import { Link } from "react-router-dom";
 
 export const PerfilEmpresa = () => {
+	const { store, actions } = useContext(Context);
+
+	useEffect(() => {
+		actions.getMiEmpresa();
+	}, []);
+
 	return (
 		<div className="container">
 			<div className="row">
@@ -11,14 +19,14 @@ export const PerfilEmpresa = () => {
 				</div>
 				<div className="col-8 d-flex">
 					<div className="col-md-9">
-						<h1>Nombre Fantasía</h1>
-						<h3>Razón social</h3>
+						<h1>{store.empresa.nombre_fantasia}</h1>
+						<h3>{store.empresa.razon_social}</h3>
 					</div>
 					<div className="col-md-3">
 						<div className="h-100 d-flex align-items-end">
-							<button type="button" className="btn boton mb-1">
+							<Link type="button" className="btn boton mb-1" to="/perfilEmpresa/editar">
 								Editar perfil
-							</button>
+							</Link>
 						</div>
 					</div>
 				</div>
@@ -27,70 +35,58 @@ export const PerfilEmpresa = () => {
 				<div className="col-sm-12 col-md-6">
 					<div>
 						<h4>Email</h4>
-						<p>empresa@gmail.com</p>
+						<p>{store.empresa.email}</p>
 					</div>
 					<div>
 						<h4>Número de RUT</h4>
-						<p>30.686.957-2</p>
+						<p>{store.empresa.RUT}</p>
 					</div>
 					<div>
 						<h4>Número de BPS</h4>
-						<p>3213124213</p>
+						<p>{store.empresa.nro_BPS}</p>
 					</div>
 					<div>
 						<h4>Número de referencia</h4>
-						<p>3213124213</p>
+						<p>{store.empresa.nro_referencia}</p>
 					</div>
 					<div>
 						<h4>Fecha de afiliación</h4>
-						<p>12/03/2016</p>
+						<p>{store.empresa.fecha_afiliacion}</p>
 					</div>
 					<div>
 						<h4>Fecha de Inicio Empresa</h4>
-						<p>12/03/2010</p>
+						<p>{store.empresa.fecha_inicio_empresa}</p>
 					</div>
 					<div>
 						<h4>Fecha de Baja</h4>
-						<p>12/03/2018</p>
+						<p>{store.empresa.fecha_de_baja}</p>
 					</div>
 					<div>
 						<h4>Observaciones</h4>
-						<p>Observaciones de ejemplo bla bla bla bla</p>
+						<p>{store.empresa.observaciones}</p>
 					</div>
 				</div>
 				<div className="col-sm-12 col-md-6 div-derecha">
 					<div className="pl-3">
 						<div>
 							<h4>Celular</h4>
-							<p>099878676</p>
+							<p>{store.empresa.observaciones}</p>
 						</div>
 						<div>
 							<h4>Teléfono</h4>
-							<p>4364 2312</p>
+							<p>{store.empresa.telefono}</p>
 						</div>
 						<div>
 							<h4>Rubro de actividad principal</h4>
-							<p>Rubro ejemplo</p>
+							<p>{store.empresa.actividad_principal}</p>
 						</div>
 						<div>
 							<h4>Rubro de actividad secundaria</h4>
-							<p>Rubro ejemplo 2</p>
-						</div>
-						<div>
-							<h4>Departamento</h4>
-							<p>Flores</p>
-						</div>
-						<div>
-							<h4>Localidad</h4>
-							<p>Flores</p>
-						</div>
-						<div>
-							<h4>Dirección</h4>
-							<p>calle Artigas 327</p>
+							<p>{store.empresa.actividad_secunadria}</p>
 						</div>
 						<div>
 							<h4>Estado</h4>
-							<p>Activo</p>
+							<p>{store.empresa.estado}</p>
 						</div>
 					</div>
 				</div>

@@ -1,11 +1,42 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			personas: [],
+			asociados: [
+				{ nombre: "Leandro Matonte", id: 1 },
+				{ nombre: "asociado 2", id: 2 },
+				{ nombre: "asociado 3", id: 3 },
+				{ nombre: "asociado 4", id: 4 }
+			],
+			personas: [
+				{ nombre: "persona 1", id: 1 },
+				{ nombre: "persona 2", id: 2 },
+				{ nombre: "persona 3", id: 3 },
+				{ nombre: "persona 4", id: 4 },
+				{ nombre: "persona 5", id: 5 }
+			],
+			empresa: {
+				razon_social: "Cargando...",
+				nombre_fantasia: "Cargando...",
+				RUT: "Cargando...",
+				direccion: "Cargando...",
+				email: "Cargando...",
+				celular: "Cargando...",
+				telefono: "Cargando...",
+				nro_BPS: "Cargando...",
+				nro_referencia: "Cargando...",
+				actividad_principal: "Cargando...",
+				actividad_secunadria: "Cargando...",
+				fecha_afiliacion: "2021-07-15",
+				fecha_inicio_empresa: "2021-07-15",
+				estado: "Cargando...",
+				fecha_de_baja: "2021-07-07",
+				observaciones: "Cargando...",
+				imagen: "Cargando..."
+			},
 			departamentos: [],
 			localidades: [],
-			asociados: [],
-			empresas: []
+			empresas: [],
+			user: {}
 		},
 		actions: {
 			eliminarAsociado: async (RUT, idPersona) => {
@@ -89,12 +120,93 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const data = await res.json();
 				setStore({ personas: data });
 			},
+			loadSomeData: async () => {
+				const actions = getActions();
+				await actions.cargarPersonas();
+			},
+			cargarPersonas: async () => {
+				let url = process.env.BACKEND_URL + "/persona";
+
+				let options = { method: "GET" };
+
+				const res = await fetch(url, options);
+				const data = await res.json();
+				setStore({ personas: data });
+			},
 			obtenerPersonaPorID: async id => {
 				const store = getStore();
 				const res = await store.personas.find(persona => {
 					return persona.id == id;
 				});
 				return res;
+			},
+			cargarDepartamentos: async () => {
+				let url = process.env.BACKEND_URL + "/departamento";
+
+				let options = { method: "GET" };
+
+				const res = await fetch(url, options);
+				const data = await res.json();
+				setStore({ departamentos: data });
+			},
+			agregarDepartamento: async nombre => {
+				const store = getStore();
+				let url = process.env.BACKEND_URL + "/departamento";
+
+				let body = { nombre: nombre };
+				let bodyHTML = JSON.stringify(body);
+
+				let options = {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: bodyHTML
+				};
+
+				const res = await fetch(url, options);
+				const data = res.json();
+
+				setStore({ departamentos: [...store.departamentos, data] });
+				return res.ok;
+			},
+			getMiEmpresa: () => {
+				var myHeaders = new Headers();
+				myHeaders.append("Content-Type", "application/json");
+				myHeaders.append("Authorization", sessionStorage.getItem("token"));
+
+				var requestOptions = {
+					method: "GET",
+					headers: myHeaders,
+					redirect: "follow"
+				};
+
+				fetch(`${process.env.BACKEND_URL}/mi_empresa`, requestOptions)
+					.then(response => response.json())
+					.then(result => setStore({ empresa: result }))
+					.catch(error => console.error("error", error));
+			},
+			actualizarMiEmpresa: () => {
+				var myHeaders = new Headers();
+				myHeaders.append("Content-Type", "application/json");
+				myHeaders.append("Authorization", sessionStorage.getItem("token"));
+
+				var raw = JSON.stringify(getStore().empresa);
+				console.log(raw);
+
+				var requestOptions = {
+					method: "PUT",
+					headers: myHeaders,
+					body: raw,
+					redirect: "follow"
+				};
+
+				return fetch(`${process.env.BACKEND_URL}/mi_empresa`, requestOptions)
+					.then(response => response.json())
+					.then(result => getActions().getMiEmpresa())
+					.catch(error => console.log("error", error));
+			},
+			setEmpresa: empresa => {
+				const store = getStore();
+				setStore({ empresa: { ...store.empresa, ...empresa } });
 			},
 			cargarDepartamentos: async () => {
 				let url = process.env.BACKEND_URL + "/departamento";
@@ -197,6 +309,66 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 				}
 				setStore({ departamentos: nuevoDepartamentos });
+			},
+			getMiAsociados: () => {
+				var myHeaders = new Headers();
+				myHeaders.append("Content-Type", "application/json");
+				myHeaders.append("Authorization", sessionStorage.getItem("token"));
+
+				var requestOptions = {
+					method: "GET",
+					headers: myHeaders,
+					redirect: "follow"
+				};
+
+				return fetch(process.env.BACKEND_URL + "/asociados/", requestOptions)
+					.then(res => res.json())
+					.then(data => getActions().mapAsociados(data))
+					.then(asociados => setStore({ asociados }))
+					.catch(err => err);
+			},
+			agregarMiAsociado: (cargo, personaId) => {
+				var myHeaders = new Headers();
+				myHeaders.append("Content-Type", "application/json");
+				myHeaders.append("Authorization", sessionStorage.getItem("token"));
+
+				var raw = JSON.stringify({ cargo, personaId });
+				var requestOptions = {
+					method: "POST",
+					headers: myHeaders,
+					body: raw,
+					redirect: "follow"
+				};
+
+				return fetch(process.env.BACKEND_URL + "/asociados/nuevo", requestOptions)
+					.then(response => response.json())
+					.then(result => result)
+					.catch(error => console.log("error", error));
+			},
+			login: (username, password) => {
+				var myHeaders = new Headers();
+				myHeaders.append("Content-Type", "application/json");
+
+				var raw = JSON.stringify({
+					username,
+					password
+				});
+
+				var requestOptions = {
+					method: "POST",
+					headers: myHeaders,
+					body: raw,
+					redirect: "follow"
+				};
+
+				fetch(process.env.BACKEND_URL + "/login", requestOptions)
+					.then(response => response.json())
+					.then(result => {
+						setStore({ user: result.user });
+						sessionStorage.setItem("token", result.token);
+						console.log("loged in ", result);
+					})
+					.catch(error => console.log("error", error));
 			}
 		}
 	};
