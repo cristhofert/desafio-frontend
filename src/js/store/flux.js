@@ -1,19 +1,8 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			asociados: [
-				{ nombre: "Leandro Matonte", id: 1 },
-				{ nombre: "asociado 2", id: 2 },
-				{ nombre: "asociado 3", id: 3 },
-				{ nombre: "asociado 4", id: 4 }
-			],
-			personas: [
-				{ nombre: "persona 1", id: 1 },
-				{ nombre: "persona 2", id: 2 },
-				{ nombre: "persona 3", id: 3 },
-				{ nombre: "persona 4", id: 4 },
-				{ nombre: "persona 5", id: 5 }
-			],
+			asociados: [],
+			personas: [],
 			empresa: {
 				razon_social: "Cargando...",
 				nombre_fantasia: "Cargando...",
@@ -124,30 +113,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const actions = getActions();
 				await actions.cargarPersonas();
 			},
-			cargarPersonas: async () => {
-				let url = process.env.BACKEND_URL + "/persona";
-
-				let options = { method: "GET" };
-
-				const res = await fetch(url, options);
-				const data = await res.json();
-				setStore({ personas: data });
-			},
 			obtenerPersonaPorID: async id => {
 				const store = getStore();
 				const res = await store.personas.find(persona => {
 					return persona.id == id;
 				});
 				return res;
-			},
-			cargarDepartamentos: async () => {
-				let url = process.env.BACKEND_URL + "/departamento";
-
-				let options = { method: "GET" };
-
-				const res = await fetch(url, options);
-				const data = await res.json();
-				setStore({ departamentos: data });
 			},
 			agregarDepartamento: async nombre => {
 				const store = getStore();
@@ -275,25 +246,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 				}
 				setStore({ localidades: nuevoLocalidades });
-			},
-			agregarDepartamento: async nombre => {
-				const store = getStore();
-				let url = process.env.BACKEND_URL + "/departamento";
-
-				let body = { nombre: nombre };
-				let bodyJSON = JSON.stringify(body);
-
-				let options = {
-					method: "POST",
-					headers: { "Content-Type": "application/json" },
-					body: bodyJSON
-				};
-
-				const res = await fetch(url, options);
-				const data = res.json();
-
-				setStore({ departamentos: [...store.departamentos, data] });
-				return res.ok;
 			},
 			borrarDepartamento: async id => {
 				const store = getStore();
