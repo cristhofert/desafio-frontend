@@ -11,11 +11,11 @@ export const AsociadoNuevo = () => {
 
 	useEffect(() => {
 		actions
-		.getMiAsociados()
-		.then(ok => console.log(ok))
-		.catch(err => setAlert(err));
+			.getMiAsociados()
+			.then(ok => console.log(ok))
+			.catch(err => setAlert(err));
 	}, []);
-	
+
 	const agregar = (_, p) => {
 		//$(modal).modal("toggle");
 		console.log(modal.current);
