@@ -212,3 +212,47 @@ a:hover{
         border-left: 2px solid rgb(82, 116, 108);
     }
 }
+
+
+// REPORTES
+.menu > li{
+	/* position: relative; */
+	display: inline-block;
+}
+
+.menu > li > a{
+	display: block;
+	padding: 10px 5px;
+	color: #000000;
+	font-family: 'Open sans';
+	text-decoration: none;
+}
+
+.menu li a:hover{
+	color: #06b9b9;
+	transition: all .3s;
+}
+
+/* Submenu*/
+
+.submenu{
+	position: absolute;
+	background: #1f8a8a;
+	visibility: hidden;
+	opacity: 0;
+	transition: opacity 1.5s;
+    z-index: 5;
+}
+
+.submenu li a{
+	display: block;
+	padding: 15px;
+	color: #fff;
+	font-family: 'Open sans';
+	text-decoration: none;
+}
+
+.menu li:hover .submenu{
+	visibility: visible;
+	opacity: 1;
+}

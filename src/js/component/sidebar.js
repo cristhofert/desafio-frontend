@@ -16,6 +16,7 @@ export const Sidebar = props => {
 					<img
 						alt="Centro Comercial e Industrial de San José"
 						src="https://ccisanjose.com.uy/wp-content/uploads/2021/04/cropped-CCISJ-logo-sin-fondo-blanco-e1618519493910.png"
+						width="200px"
 					/>
 				</div>
 				{store.user.is_admin ? (
