@@ -368,9 +368,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				const res = await fetch(url, options);
 				const data = await res.json();
-				setStore({ user: data.user });
-				sessionStorage.setItem("token", data.token);
-				sessionStorage.setItem("username", data.user.username);
+				if (res.ok) {
+					setStore({ user: data.user });
+					sessionStorage.setItem("token", data.token);
+					sessionStorage.setItem("username", data.user.username);
+				}
 
 				return res.ok;
 			},
