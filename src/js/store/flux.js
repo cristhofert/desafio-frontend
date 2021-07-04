@@ -24,10 +24,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			departamentos: [],
 			localidades: [],
+			departamentosYlocalidades: [],
+			departamentoYLocalidad: {},
 			empresas: [],
 			user: {}
 		},
 		actions: {
+			crearEmpresa: async body => {
+				let url = process.env.BACKEND_URL + "/empresa";
+
+				const bodyJSON = JSON.stringify(body);
+				let options = {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: bodyJSON
+				};
+				const res = await fetch(url, options);
+				const data = await res.json();
+				console.log(data);
+				return res.ok;
+			},
+			setearDepYLoc: (departamento, localidad) => {
+				const depYloc = { departamento, localidad };
+				setStore({ departamentoYLocalidad: depYloc });
+			},
 			eliminarAsociado: async (RUT, idPersona) => {
 				var myHeaders = new Headers();
 				myHeaders.append("Content-Type", "application/json");
@@ -109,10 +129,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const data = await res.json();
 				setStore({ personas: data });
 			},
-			loadSomeData: async () => {
-				const actions = getActions();
-				await actions.cargarPersonas();
-			},
+			loadSomeData: async () => {},
 			obtenerPersonaPorID: async id => {
 				const store = getStore();
 				const res = await store.personas.find(persona => {
@@ -187,6 +204,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const res = await fetch(url, options);
 				const data = await res.json();
 				setStore({ departamentos: data });
+			},
+			cargarDepartamentosyLocalidades: async () => {
+				let url = process.env.BACKEND_URL + "/departamentoYlocalidad";
+
+				let options = { method: "GET" };
+
+				const res = await fetch(url, options);
+				const data = await res.json();
+
+				setStore({ departamentosYlocalidades: data });
+			},
+			obtenerLocalidadesPorNombre: async nombre => {
+				const store = getStore();
+				const departamento = await store.departamentosYlocalidades.find(departamento => {
+					return departamento.nombre == nombre;
+				});
+				console.log(departamento);
+				setStore({ localidades: departamento.localidades });
 			},
 			agregarNuevaLocalidad: async (idDepartamento, nombre) => {
 				const store = getStore();
