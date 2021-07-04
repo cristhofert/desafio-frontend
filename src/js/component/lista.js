@@ -13,6 +13,10 @@ export const Lista = props => {
 		else actions.eliminarAsociado(store.user.empresa.RUT, idPersona);
 	};
 
+	const eliminarEmpresa = RUT => {
+		actions.eliminarEmpresa(RUT);
+	};
+
 	return (
 		<div className="lista p-4 shadow my-2">
 			{store[props.tipo].length != 0 ? (

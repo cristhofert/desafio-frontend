@@ -13,6 +13,39 @@ export const AdminEmpresas = () => {
 
 	return (
 		<div className="container">
+			<div>
+				<ul className="menu p-0 my-auto">
+					<li>
+						<a href="#">
+							<i className="fa fa-bars mr-2" />
+							Reportes
+						</a>
+						<ul className="submenu">
+							<li>
+								<a href="#">Cantidad total de empresas activas</a>
+							</li>
+							<li>
+								<a href="#">Cantidad total de empresas por rubro de actividad</a>
+							</li>
+							<li>
+								<a href="#">Listado de empresas por rubro de actividad</a>
+							</li>
+							<li>
+								<a href="#">Cantidad total de empresas por localidad</a>
+							</li>
+							<li>
+								<a href="#">Altas y bajas del mes</a>
+							</li>
+							<li>
+								<a href="#">Aniversario de empresas por mes</a>
+							</li>
+							<li>
+								<a href="#">Listado de emprendedores por rubro de actividad</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
 			<div className="row">
 				<div className="col-sm-12 col-md-9">
 					<div className="py-2">
