@@ -1,8 +1,9 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			asociados: [],
 			personas: [],
+			asociados: [],
+			usuarios: [],
 			empresa: {
 				razon_social: "Cargando...",
 				nombre_fantasia: "Cargando...",
@@ -114,7 +115,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(result => setStore({ empresas: result }))
 					.catch(error => console.log("error", error));
 			},
+			getUsuarios: async () => {
+				const store = getStore();
+				var myHeaders = new Headers();
+				myHeaders.append("Content-Type", "application/json");
 
+				var requestOptions = {
+					method: "GET",
+					headers: myHeaders,
+					redirect: "follow"
+				};
+
+				return fetch(process.env.BACKEND_URL + "/user", requestOptions)
+					.then(response => response.json())
+					.then(result => setStore({ usuarios: result }))
+					.catch(error => console.log("error", error));
+			},
 			loadSomeData: async () => {
 				const actions = getActions();
 				await actions.cargarPersonas();
@@ -312,6 +328,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 				};
 
 				return fetch(process.env.BACKEND_URL + "/asociados/nuevo", requestOptions)
+					.then(response => response.json())
+					.then(result => result)
+					.catch(error => console.log("error", error));
+			},
+			crearUsuario: usuario => {
+				var myHeaders = new Headers();
+				myHeaders.append("Content-Type", "application/json");
+				myHeaders.append("Authorization", sessionStorage.getItem("token"));
+
+				var raw = JSON.stringify(usuario);
+				var requestOptions = {
+					method: "POST",
+					headers: myHeaders,
+					body: raw,
+					redirect: "follow"
+				};
+
+				return fetch(process.env.BACKEND_URL + "/user", requestOptions)
 					.then(response => response.json())
 					.then(result => result)
 					.catch(error => console.log("error", error));
