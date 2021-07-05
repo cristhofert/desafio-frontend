@@ -25,11 +25,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			departamentos: [],
 			localidades: [],
+			departamentosYlocalidades: [],
+			departamentoYLocalidad: {},
 			empresas: [],
 			user: {},
 			usuarioEditar: { name: "cargando..." }
 		},
 		actions: {
+			crearEmpresa: async body => {
+				let url = process.env.BACKEND_URL + "/empresa";
+
+				const bodyJSON = JSON.stringify(body);
+				let options = {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: bodyJSON
+				};
+				const res = await fetch(url, options);
+				const data = await res.json();
+				console.log(data);
+				return res.ok;
+			},
+			setearDepYLoc: (departamento, localidad) => {
+				const depYloc = { departamento, localidad };
+				setStore({ departamentoYLocalidad: depYloc });
+			},
 			eliminarEmpresa: async RUT => {
 				const store = getStore();
 				let url =
@@ -90,8 +110,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const asociado = { ...data[index].persona, ...data[index].cargo };
 					asociados.push(asociado);
 				}
-				console.log(asociados, data);
 				return asociados;
+			},
+			agregarAsociadoAEmpresa: async (RUTEmpresa, idAsociado, cargo) => {
+				let url = process.env.BACKEND_URL + "/empresa_persona";
+
+				const body = {
+					empresaId: RUTEmpresa,
+					personaId: idAsociado,
+					cargo: cargo
+				};
+				const bodyJSON = JSON.stringify(body);
+
+				let options = {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: bodyJSON
+				};
+
+				const res = await fetch(url, options);
+				return res.ok;
 			},
 
 			getAsociados: async RUT => {
@@ -155,10 +193,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const data = await res.json();
 				setStore({ personas: data });
 			},
-			loadSomeData: async () => {
-				const actions = getActions();
-				await actions.cargarPersonas();
-			},
+			loadSomeData: async () => {},
 			obtenerPersonaPorID: async id => {
 				const store = getStore();
 				const res = await store.personas.find(persona => {
@@ -271,6 +306,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(res => res.json())
 					.then(data => setStore({ usuarioEditar: data }))
 					.catch(err => console.log(err));
+			},
+			cargarDepartamentosyLocalidades: async () => {
+				let url = process.env.BACKEND_URL + "/departamentoYlocalidad";
+
+				let options = { method: "GET" };
+
+				const res = await fetch(url, options);
+				const data = await res.json();
+
+				setStore({ departamentosYlocalidades: data });
+			},
+			obtenerLocalidadesPorNombre: async nombre => {
+				const store = getStore();
+				const departamento = await store.departamentosYlocalidades.find(departamento => {
+					return departamento.nombre == nombre;
+				});
+				console.log(departamento);
+				setStore({ localidades: departamento.localidades });
 			},
 			agregarNuevaLocalidad: async (idDepartamento, nombre) => {
 				const store = getStore();

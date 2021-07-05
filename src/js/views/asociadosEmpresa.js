@@ -19,7 +19,7 @@ export const AsociadosEmpresa = () => {
 				</div>
 				<div className="col-md-4 col-sm-12">
 					<div className="d-flex h-100 justify-content-center justify-content-md-end align-items-center">
-						<Link to="/empresas/agregar-asociado">
+						<Link to={`/empresas/agregar-asociado/${params.id}`}>
 							<button type="button" className="btn boton py-2 my-1">
 								Agregar asociado
 							</button>
