@@ -14,11 +14,11 @@ export const ListaDeItems = props => {
 	};
 	return (
 		<div className="lista p-4 shadow my-2">
-			{store.arregloFiltrado.length > 0 ? (
-				store.arregloFiltrado.map(itemLista => {
+			{store[props.tipo].length > 0 ? (
+				store[props.tipo].map((itemLista, index) => {
 					return (
 						<Item
-							key={itemLista.id}
+							key={itemLista.id || index}
 							id={itemLista.id}
 							nombre={itemLista.nombre || itemLista.name}
 							primerBoton={props.primerBoton}
@@ -28,9 +28,9 @@ export const ListaDeItems = props => {
 							}}
 							primerBotonTo={
 								props.primerBotonTo
-									? itemLista.username
-										? props.primerBotonTo.replace(":username", itemLista.username)
-										: props.primerBotonTo.replace(":id", itemLista.id)
+									? props.primerBotonTo.replace(":nombre", itemLista.nombre) ||
+									  props.primerBotonTo.replace(":username", itemLista.username) ||
+									  props.primerBotonTo.replace(":id", itemLista.id)
 									: ""
 							}
 							tipo={props.tipo}

@@ -53,6 +53,11 @@ export const Sidebar = props => {
 								<p>Usuarios</p>
 							</div>
 						</Link>
+						<Link to="/rubros">
+							<div className="itemListaSidebar d-flex align-items-center justify-content-center">
+								<p>Rubros</p>
+							</div>
+						</Link>
 					</>
 				) : (
 					""

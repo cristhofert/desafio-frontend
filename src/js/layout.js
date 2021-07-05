@@ -30,6 +30,9 @@ import { AsociadoNuevo } from "./views/AsociadoNuevo";
 import { CrearEmpresa } from "./views/crearEmpresa";
 import { Usuarios } from "./views/usuarios";
 import { EditarUsuario } from "./views/editarUsuario";
+import { Rubros } from "./views/rubros";
+import { EditarRubro } from "./views/editarRubro";
+import { AgregarRubro } from "./views/agregarRubro";
 
 //create your first component
 const Layout = () => {
@@ -56,6 +59,12 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/demo">
 							<Demo />
+						</Route>
+						<Route exact path="/rubro/nuevo">
+							<AgregarRubro />
+						</Route>
+						<Route exact path="/rubro/:nombre/editar">
+							<EditarRubro />
 						</Route>
 						<Route exact path="/asociados">
 							<Asociado />
@@ -95,6 +104,9 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/departamentos">
 							<Departamento />
+						</Route>
+						<Route exact path="/rubros">
+							<Rubros />
 						</Route>
 						<Route exact path="/localidades/:id/">
 							<EditarLocalidad />
