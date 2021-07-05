@@ -81,13 +81,17 @@
 		]
 	},
 	"dependencies": {
+		"bootstrap": "^4.3.1",
+		"chart.js": "^3.4.1",
 		"@popperjs/core": "^2.9.2",
 		"popper.js": "^1.16.1",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
+		"react-chartjs-2": "^3.0.3",
 		"react-dom": "^16.8.4",
 		"react-polyfills": "0.0.1",
 		"react-router-dom": "^5.2.0",
+		"victory": "^35.9.0",
 		"resolve-url-loader": "^4.0.0"
 	}
 }

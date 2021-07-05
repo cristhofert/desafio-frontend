@@ -69,13 +69,19 @@ export const AdminEmpresas = () => {
 			</div>
 
 			<div className="row my-2">
-				<div className="col-sm-12 col-md-3">
+				<div className="col-sm-12 col-md-4">
 					<h2>Filtrar:</h2>
 				</div>
 				<DepartamentoYLocalidad clases={"col-sm-12 col-md-3"} />
 				<div className="col-sm-12 col-md-3">
 					<select id="Estado" className="form-control my-1">
 						<option>Estado</option>
+						<option>...</option>
+					</select>
+				</div>
+				<div className="col-sm-12 col-md-2">
+					<select id="Rubro" className="form-control my-1">
+						<option>Rubro</option>
 						<option>...</option>
 					</select>
 				</div>
