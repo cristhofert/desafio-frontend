@@ -9,10 +9,10 @@ export const ListaDeItems = props => {
 	return (
 		<div className="lista p-4 shadow my-2">
 			{store[props.tipo].length > 0 ? (
-				store[props.tipo].map(itemLista => {
+				store[props.tipo].map((itemLista, index) => {
 					return (
 						<Item
-							key={itemLista.id}
+							key={itemLista.id || index}
 							id={itemLista.id}
 							nombre={itemLista.nombre || itemLista.name}
 							primerBoton={props.primerBoton}
@@ -20,7 +20,8 @@ export const ListaDeItems = props => {
 							segundoBotonClick={props.segundoBotonClick}
 							primerBotonTo={
 								props.primerBotonTo
-									? props.primerBotonTo.replace(":username", itemLista.username) ||
+									? props.primerBotonTo.replace(":nombre", itemLista.nombre) ||
+									  props.primerBotonTo.replace(":username", itemLista.username) ||
 									  props.primerBotonTo.replace(":id", itemLista.id)
 									: ""
 							}
