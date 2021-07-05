@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { ListaDeItems } from "../component/listaDeItems";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
+import { Buscador } from "../component/buscador";
 
 export const Localidades = () => {
 	const params = useParams();
@@ -9,6 +10,7 @@ export const Localidades = () => {
 
 	const cargarDatos = async () => {
 		await actions.obtenerLocalidades(params.id);
+		await actions.cargarBuscador("localidades");
 	};
 
 	useEffect(() => {
@@ -19,14 +21,7 @@ export const Localidades = () => {
 		<div className="container">
 			<div className="row">
 				<div className="col-sm-12 col-md-9">
-					<div className="py-2">
-						<input
-							type="text"
-							placeholder="Buscar Localidad"
-							className="inputGris form-control my-1"
-							id="buscador"
-						/>
-					</div>
+					<Buscador tipo={"localidades"} placeholderBuscador={"Buscar Localidad"} />
 				</div>
 				<div className="col-sm-12 col-md-3">
 					<div className="py-2 d-flex justify-content-center align-items-center">

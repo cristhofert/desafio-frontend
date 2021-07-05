@@ -4,6 +4,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			personas: [],
 			asociados: [],
 			usuarios: [],
+			arregloFiltrado: [],
 			empresa: {
 				razon_social: "Cargando...",
 				nombre_fantasia: "Cargando...",
@@ -29,9 +30,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 			departamentoYLocalidad: {},
 			empresas: [],
 			user: {},
-			usuarioEditar: { name: "cargando..." }
+			rubros: [{ nombre: "Cargando..." }],
+			usuarioEditar: { name: "cargando..." },
+			rubro: ""
 		},
 		actions: {
+			setRubro: e => {
+				setStore({ rubro: e.target.value });
+			},
+			cargarBuscador: async arreglo => {
+				const store = getStore();
+				setStore({ arregloFiltrado: store[arreglo] });
+			},
+			buscar: async (palabra, arreglo) => {
+				const store = getStore();
+				let propiedad = arreglo == "empresas" ? "nombre_fantasia" : "nombre";
+				propiedad = arreglo == "usuarios" ? "name" : propiedad;
+				const nuevoArregloFiltrado = await store[arreglo].filter(item => {
+					return item[propiedad].toLowerCase().includes(palabra.toLowerCase());
+				});
+				setStore({ arregloFiltrado: nuevoArregloFiltrado });
+			},
 			crearEmpresa: async body => {
 				let url = process.env.BACKEND_URL + "/empresa";
 
@@ -67,17 +86,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 				}
 				setStore({ empresas: nuevaEmpresa });
+				setStore({ arregloFiltrado: nuevaEmpresa });
+			},
+			eliminarRubro: async nombre => {
+				const store = getStore();
+				let url = `${process.env.BACKEND_URL}/rubro/${nombre}`;
+
+				let options = { method: "DELETE" };
+
+				const res = await fetch(url, options);
+				let nuevo = [];
+				if (res.ok) {
+					nuevo = store.rubros.filter(rubro => {
+						return rubro.nombre != nombre;
+					});
+				}
+				setStore({ rubros: nuevo });
 			},
 			eliminarUsuario: async id => {
 				const store = getStore();
 
 				const res = await fetch(`${process.env.BACKEND_URL}/usuario/${id}`, { method: "DELETE" });
 				if (res.ok) {
-					setStore({
-						usuarios: store.usuarios.filter(u => {
-							return u.id != id;
-						})
+					const nuevosUsuarios = store.usuarios.filter(u => {
+						return u.id != id;
 					});
+					setStore({ usuarios: nuevosUsuarios });
+					setStore({ arregloFiltrado: nuevosUsuarios });
 				}
 			},
 
@@ -101,6 +136,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return asociado.id != idPersona;
 					});
 					setStore({ asociados: nuevosAsociados });
+					setStore({ arregloFiltrado: nuevosAsociados });
 				}
 			},
 
@@ -159,12 +195,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 					redirect: "follow"
 				};
 
-				fetch(process.env.BACKEND_URL + "/empresa", requestOptions)
+				await fetch(process.env.BACKEND_URL + "/empresa", requestOptions)
 					.then(response => response.json())
 					.then(result => setStore({ empresas: result }))
 					.catch(error => console.log("error", error));
 			},
-			getUsuarios: () => {
+			getUsuarios: async () => {
 				const store = getStore();
 				var myHeaders = new Headers();
 				myHeaders.append("Content-Type", "application/json");
@@ -175,10 +211,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					redirect: "follow"
 				};
 
-				return fetch(process.env.BACKEND_URL + "/user", requestOptions)
-					.then(response => response.json())
-					.then(result => setStore({ usuarios: result }))
-					.catch(error => console.log("error", error));
+				const res = await fetch(process.env.BACKEND_URL + "/user", requestOptions);
+				const data = await res.json();
+				setStore({ usuarios: data });
+				return res.ok;
 			},
 			loadSomeData: async () => {
 				const actions = getActions();
@@ -215,9 +251,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 				};
 
 				const res = await fetch(url, options);
-				const data = res.json();
+				const data = await res.json();
 
 				setStore({ departamentos: [...store.departamentos, data] });
+				return res.ok;
+			},
+			agregarRubro: async nombre => {
+				const store = getStore();
+				let url = process.env.BACKEND_URL + "/rubro";
+
+				let body = { nombre: nombre };
+				let bodyHTML = JSON.stringify(body);
+
+				let options = {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: bodyHTML
+				};
+
+				const res = await fetch(url, options);
+				const data = res.json();
+
+				setStore({ rubros: [...store.rubros, data] });
 				return res.ok;
 			},
 			getMiEmpresa: () => {
@@ -280,6 +335,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(result => getActions().getUsuarios())
 					.catch(error => console.log("error", error));
 			},
+			actualizarRubro: nombre => {
+				var myHeaders = new Headers();
+				myHeaders.append("Content-Type", "application/json");
+				myHeaders.append("Authorization", sessionStorage.getItem("token"));
+
+				var raw = JSON.stringify({ nombre: nombre, nombre_nuevo: getStore().rubro });
+				console.log(raw);
+
+				var requestOptions = {
+					method: "PUT",
+					headers: myHeaders,
+					body: raw,
+					redirect: "follow"
+				};
+
+				return fetch(`${process.env.BACKEND_URL}/rubro`, requestOptions)
+					.then(res => {
+						if (res.ok) res;
+						else throw res.json();
+					})
+					.then(response => response.json())
+					.catch(error => console.log("error", error));
+			},
 			setEmpresa: empresa => {
 				const store = getStore();
 				setStore({ empresa: { ...store.empresa, ...empresa } });
@@ -301,10 +379,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const data = await res.json();
 				setStore({ departamentos: data });
 			},
+			cargarRubros: async () => {
+				let url = process.env.BACKEND_URL + "/rubro";
+
+				let options = { method: "GET" };
+
+				const res = await fetch(url, options);
+				const data = await res.json();
+				setStore({ rubros: data });
+			},
 			getUsuario: async username => {
 				fetch(`${process.env.BACKEND_URL}/user/${username}`, { method: "GET" })
 					.then(res => res.json())
 					.then(data => setStore({ usuarioEditar: data }))
+					.catch(err => console.log(err));
+			},
+			getRubro: async name => {
+				fetch(`${process.env.BACKEND_URL}/rubro/${name}`, { method: "GET" })
+					.then(res => res.json())
+					.then(data => {
+						setStore({ rubro: data.nombre });
+					})
 					.catch(err => console.log(err));
 			},
 			cargarDepartamentosyLocalidades: async () => {
@@ -383,6 +478,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 				}
 				setStore({ localidades: nuevoLocalidades });
+				setStore({ arregloFiltrado: nuevoLocalidades });
 			},
 			borrarDepartamento: async id => {
 				const store = getStore();
@@ -398,6 +494,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 				}
 				setStore({ departamentos: nuevoDepartamentos });
+				setStore({ arregloFiltrado: nuevoDepartamentos });
+			},
+			borrarRubro: async name => {
+				const store = getStore();
+				let url = process.env.BACKEND_URL + `/rubro/${name}`;
+
+				let options = { method: "DELETE" };
+
+				const res = await fetch(url, options);
+				let nuevoRubros = [];
+				if (res.ok) {
+					nuevoRubros = store.rubros.filter(rubro => {
+						return rubro.nombre != name;
+					});
+				}
+				setStore({ rubros: nuevoRubros });
 			},
 			getMiAsociados: () => {
 				var myHeaders = new Headers();
@@ -520,9 +632,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 						imagen: "Cargando..."
 					},
 					departamentos: [],
+					rubros: [],
 					localidades: [],
 					empresas: [],
-					user: {}
+					user: {},
+					rubro: ""
 				});
 			}
 		}

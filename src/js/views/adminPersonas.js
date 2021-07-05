@@ -2,26 +2,24 @@ import React, { useContext, useEffect } from "react";
 import { Lista } from "../component/lista";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
+import { Buscador } from "../component/buscador";
 
 export const AdminPersonas = () => {
 	const { store, actions } = useContext(Context);
 
+	const cargarDatos = async () => {
+		await actions.cargarPersonas();
+		await actions.cargarBuscador("personas");
+	};
 	useEffect(() => {
-		actions.cargarPersonas();
+		cargarDatos();
 	}, []);
 
 	return (
 		<div className="container">
 			<div className="row">
 				<div className="col-sm-12 col-md-9">
-					<div className="py-2">
-						<input
-							type="text"
-							placeholder="Buscar Persona"
-							className="inputGris form-control my-1"
-							id="buscador"
-						/>
-					</div>
+					<Buscador tipo={"personas"} placeholderBuscador={"Buscar Persona"} />
 				</div>
 				<div className="col-sm-12 col-md-3">
 					<div className="py-2 d-flex justify-content-center align-items-center">
