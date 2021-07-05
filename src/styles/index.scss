@@ -209,7 +209,7 @@ a:hover{
 
 @media screen and (min-width: 768px) {
     .div-derecha {
-        border-left: 2px solid rgb(82, 116, 108);
+        border-left: 2px solid rgb(99, 138, 129);
     }
 }
 
@@ -260,4 +260,50 @@ a:hover{
 .logo{
     width: 200px;
     margin-left: 25px;
+}
+
+//LOGIN
+#fondoLogin1{
+    background: linear-gradient(to left, rgb(8, 173, 132), rgba(34, 204, 161, 0.582), rgb(142, 233, 225));
+}
+
+#Login{
+    margin-top: 150px;
+}
+
+#btnLogin{
+    border: white 2px solid;
+    width: 150px;
+    color: white;
+    font-weight: bolder;
+    background: transparent;
+    opacity: .7;
+    border-radius: 10px;
+    height: 45px;
+}
+
+#exampleInputEmail1, #exampleInputPassword1{
+    border-radius: 10px;
+    font-family: 'Encode Sans SC', sans-serif;
+    font-family: 'Oswald', sans-serif;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    height: 45px;
+}
+
+#formLogin{
+    font-family: 'Encode Sans SC', sans-serif;
+    font-family: 'Oswald', sans-serif;
+    font-family: 'Roboto', sans-serif;
+    font-size: 40px;
+}
+
+.div-derechaLogin{
+    border-left: none;
+}
+
+@media screen and (min-width: 768px) {
+    .div-derechaLogin {
+        border-left: 2px solid rgb(255, 255, 255);
+    }
 }
