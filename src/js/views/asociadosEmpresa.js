@@ -2,13 +2,19 @@ import React, { useEffect, useContext } from "react";
 import { Lista } from "../component/lista";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
+import { Buscador } from "../component/buscador";
 
 export const AsociadosEmpresa = () => {
 	const { store, actions } = useContext(Context);
 	const params = useParams();
 
+	const cargarDatos = async () => {
+		await actions.cargarPersonas();
+		await actions.getAsociados(params.id);
+		await actions.cargarBuscador("asociados");
+	};
 	useEffect(() => {
-		actions.getAsociados(params.id);
+		cargarDatos();
 	}, []);
 
 	return (
@@ -27,14 +33,7 @@ export const AsociadosEmpresa = () => {
 					</div>
 				</div>
 				<div className="col-12">
-					<div className="py-2">
-						<input
-							type="text"
-							placeholder="Buscar Persona"
-							className="inputGris form-control my-1"
-							id="buscador"
-						/>
-					</div>
+					<Buscador tipo={"asociados"} placeholderBuscador={"Buscar Asociado"} />
 				</div>
 			</div>
 			<Lista tipo="asociados" />

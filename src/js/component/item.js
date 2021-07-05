@@ -6,12 +6,12 @@ import { Context } from "../store/appContext";
 export const Item = props => {
 	const { store, actions } = useContext(Context);
 
-	const handleClick = id => {
+	const handleClick = (e, props, id) => {
 		if (props.tipo == "localidades") {
 			actions.borrarLocalidad(id);
 		} else if (props.tipo == "departamentos") {
 			actions.borrarDepartamento(id);
-		}
+		} else props.segundoBotonClick(e, props);
 	};
 	return (
 		<div className="itemLista my-2 p-3 shadow">
@@ -34,7 +34,7 @@ export const Item = props => {
 							<button
 								type="button"
 								className="btn botonOutline m-1"
-								onClick={e => props.segundoBotonClick(e, props)}>
+								onClick={e => handleClick(e, props, props.id)}>
 								{props.segundoBoton}
 							</button>
 						) : (
