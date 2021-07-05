@@ -14,8 +14,8 @@ export const ListaDeItems = props => {
 	};
 	return (
 		<div className="lista p-4 shadow my-2">
-			{store[props.tipo].length > 0 ? (
-				store[props.tipo].map(itemLista => {
+			{store.arregloFiltrado.length > 0 ? (
+				store.arregloFiltrado.map(itemLista => {
 					return (
 						<Item
 							key={itemLista.id}

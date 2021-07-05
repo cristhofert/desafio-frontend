@@ -8,8 +8,8 @@ export const Lista = props => {
 	const nombreArreglo = props.tipo == "agregarAsociados" ? "personas" : props.tipo;
 	return (
 		<div className="lista p-4 shadow my-2">
-			{store[nombreArreglo].length != 0 ? (
-				store[nombreArreglo].map(itemLista => {
+			{store.arregloFiltrado.length != 0 ? (
+				store.arregloFiltrado.map(itemLista => {
 					return (
 						<div key={itemLista.id ? itemLista.id : itemLista.RUT} className="itemLista my-2 p-3 shadow">
 							<ItemDeLista tipo={props.tipo} itemLista={itemLista} />

@@ -3,12 +3,17 @@ import { Lista } from "../component/lista";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 import { DepartamentoYLocalidad } from "../component/departamentoYLocalidad";
+import { Buscador } from "../component/buscador";
 
 export const AdminEmpresas = () => {
 	const { store, actions } = useContext(Context);
 
+	const cargarDatos = async () => {
+		await actions.getEmpresas();
+		await actions.cargarBuscador("empresas");
+	};
 	useEffect(() => {
-		actions.getEmpresas();
+		cargarDatos();
 	}, []);
 
 	return (
@@ -48,14 +53,7 @@ export const AdminEmpresas = () => {
 			</div>
 			<div className="row">
 				<div className="col-sm-12 col-md-9">
-					<div className="py-2">
-						<input
-							type="text"
-							placeholder="Buscar Empresa"
-							className="inputGris form-control my-1"
-							id="buscador"
-						/>
-					</div>
+					<Buscador tipo={"empresas"} placeholderBuscador={"Buscar Empresa"} />
 				</div>
 				<div className="col-sm-12 col-md-3">
 					<div className="py-2 d-flex justify-content-center align-items-center">
@@ -69,7 +67,7 @@ export const AdminEmpresas = () => {
 			</div>
 
 			<div className="row my-2">
-				<div className="col-sm-12 col-md-4">
+				<div className="col-12">
 					<h2>Filtrar:</h2>
 				</div>
 				<DepartamentoYLocalidad clases={"col-sm-12 col-md-3"} />
@@ -79,7 +77,7 @@ export const AdminEmpresas = () => {
 						<option>...</option>
 					</select>
 				</div>
-				<div className="col-sm-12 col-md-2">
+				<div className="col-sm-12 col-md-3">
 					<select id="Rubro" className="form-control my-1">
 						<option>Rubro</option>
 						<option>...</option>

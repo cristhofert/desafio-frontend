@@ -2,23 +2,29 @@ import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { ListaDeItems } from "../component/listaDeItems";
 import { Link } from "react-router-dom";
+import { Buscador } from "../component/buscador";
 
 export const Usuarios = () => {
 	const { store, actions } = useContext(Context);
 	const [alert, setAlert] = useState("");
 
+	const cargarDatos = async () => {
+		const ok = await actions.getUsuarios();
+		if (!ok) {
+			setAlert(err);
+		}
+		await actions.cargarBuscador("usuarios");
+	};
+
 	useEffect(() => {
-		actions
-			.getUsuarios()
-			.then(ok => console.log(ok))
-			.catch(err => setAlert(err));
+		cargarDatos();
 	}, []);
 
 	return (
 		<div className="container">
 			{alert != "" ? (
 				<div className="alert alert-danger" role="alert">
-					{alert}
+					Ha ocurrido un error
 				</div>
 			) : (
 				""
@@ -30,14 +36,7 @@ export const Usuarios = () => {
 			</div>
 			<div className="row">
 				<div className="col-9">
-					<div className="py-2">
-						<input
-							type="text"
-							placeholder="Buscar Persona"
-							className="inputGris form-control my-1"
-							id="buscador"
-						/>
-					</div>
+					<Buscador tipo={"usuarios"} placeholderBuscador={"Buscar Usuario"} />
 				</div>
 				<div className="col-sm-3 col-md-3">
 					<div className="py-2 d-flex justify-content-center align-items-center">
