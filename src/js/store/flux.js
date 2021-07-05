@@ -215,7 +215,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				};
 
 				const res = await fetch(url, options);
-				const data = res.json();
+				const data = await res.json();
 
 				setStore({ departamentos: [...store.departamentos, data] });
 				return res.ok;

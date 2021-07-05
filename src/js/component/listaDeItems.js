@@ -5,7 +5,13 @@ import { Item } from "../component/item";
 
 export const ListaDeItems = props => {
 	const { store, actions } = useContext(Context);
-
+	const handleClick = id => {
+		if (props.tipo == "departamentos") {
+			actions.borrarDepartamento(id);
+		} else {
+			props.segundoBotonClick();
+		}
+	};
 	return (
 		<div className="lista p-4 shadow my-2">
 			{store[props.tipo].length > 0 ? (
@@ -17,11 +23,14 @@ export const ListaDeItems = props => {
 							nombre={itemLista.nombre || itemLista.name}
 							primerBoton={props.primerBoton}
 							segundoBoton={props.segundoBoton}
-							segundoBotonClick={props.segundoBotonClick}
+							segundoBotonClick={() => {
+								handleClick(itemLista.id);
+							}}
 							primerBotonTo={
 								props.primerBotonTo
-									? props.primerBotonTo.replace(":username", itemLista.username) ||
-									  props.primerBotonTo.replace(":id", itemLista.id)
+									? itemLista.username
+										? props.primerBotonTo.replace(":username", itemLista.username)
+										: props.primerBotonTo.replace(":id", itemLista.id)
 									: ""
 							}
 							tipo={props.tipo}

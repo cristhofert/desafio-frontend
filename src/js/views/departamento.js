@@ -5,7 +5,7 @@ import { Context } from "../store/appContext";
 
 export const Departamento = () => {
 	const { store, actions } = useContext(Context);
-	useEffect(() => {
+	const borrarDep = useEffect(() => {
 		if (store.departamentos.length == 0) {
 			actions.cargarDepartamentos();
 		}

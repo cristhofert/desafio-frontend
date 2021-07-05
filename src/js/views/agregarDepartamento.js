@@ -57,7 +57,7 @@ export const AgregarDepartamento = () => {
 							</div>
 
 							<div className="justify-content-center d-flex">
-								<button type="button" className="btn boton mb-5">
+								<button type="submit" className="btn boton mb-5">
 									Agregar
 								</button>
 							</div>
