@@ -14,11 +14,16 @@ export const ListaDeItems = props => {
 						<Item
 							key={itemLista.id}
 							id={itemLista.id}
-							nombre={itemLista.nombre}
+							nombre={itemLista.nombre || itemLista.name}
 							primerBoton={props.primerBoton}
 							segundoBoton={props.segundoBoton}
 							segundoBotonClick={props.segundoBotonClick}
-							primerBotonTo={props.primerBotonTo ? props.primerBotonTo.replace(":id", itemLista.id) : ""}
+							primerBotonTo={
+								props.primerBotonTo
+									? props.primerBotonTo.replace(":username", itemLista.username) ||
+									  props.primerBotonTo.replace(":id", itemLista.id)
+									: ""
+							}
 							tipo={props.tipo}
 						/>
 					);
