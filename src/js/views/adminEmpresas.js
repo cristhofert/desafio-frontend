@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from "react";
 import { Lista } from "../component/lista";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
+import { DepartamentoYLocalidad } from "../component/departamentoYLocalidad";
 
 export const AdminEmpresas = () => {
 	const { store, actions } = useContext(Context);
@@ -71,18 +72,7 @@ export const AdminEmpresas = () => {
 				<div className="col-sm-12 col-md-3">
 					<h2>Filtrar:</h2>
 				</div>
-				<div className="col-sm-12 col-md-3">
-					<select id="Departamento" className="form-control my-1">
-						<option>Departamento</option>
-						<option>...</option>
-					</select>
-				</div>
-				<div className="col-sm-12 col-md-3">
-					<select id="Localidad" className="form-control my-1">
-						<option>Localidad</option>
-						<option>...</option>
-					</select>
-				</div>
+				<DepartamentoYLocalidad clases={"col-sm-12 col-md-3"} />
 				<div className="col-sm-12 col-md-3">
 					<select id="Estado" className="form-control my-1">
 						<option>Estado</option>
