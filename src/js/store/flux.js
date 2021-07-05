@@ -98,8 +98,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const asociado = { ...data[index].persona, ...data[index].cargo };
 					asociados.push(asociado);
 				}
-				console.log(asociados, data);
 				return asociados;
+			},
+			agregarAsociadoAEmpresa: async (RUTEmpresa, idAsociado, cargo) => {
+				let url = process.env.BACKEND_URL + "/empresa_persona";
+
+				const body = {
+					empresaId: RUTEmpresa,
+					personaId: idAsociado,
+					cargo: cargo
+				};
+				const bodyJSON = JSON.stringify(body);
+
+				let options = {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: bodyJSON
+				};
+
+				const res = await fetch(url, options);
+				return res.ok;
 			},
 
 			getAsociados: async RUT => {

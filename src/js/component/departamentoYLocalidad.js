@@ -40,7 +40,7 @@ export const DepartamentoYLocalidad = props => {
 					}}
 					value={datosDireccion.nombre}
 					id="departamento"
-					className="form-control"
+					className="form-control my-1"
 					required>
 					{datosDireccion.map((departamento, index) => {
 						return (
@@ -63,7 +63,7 @@ export const DepartamentoYLocalidad = props => {
 					}}
 					value={localidadSeleccionada}
 					id="localidad"
-					className="form-control"
+					className="form-control my-1"
 					required>
 					{datosDireccion[seleccionado] && datosDireccion[seleccionado].localidades
 						? datosDireccion[seleccionado].localidades.map((localidad, index) => {
