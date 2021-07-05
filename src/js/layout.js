@@ -10,6 +10,8 @@ import { EditarEmpresa } from "./views/editarEmpresa";
 import { PerfilEmpresa } from "./views/perfilEmpresa";
 import { EditarPerfilEmpresa } from "./views/editarPerfilEmpresa";
 import { CrearUsuario } from "./views/crearUsuario";
+import { TotalEmpresasRubro } from "./views/totalEmpresasRubro";
+import { Graficos } from "./views/graficos";
 
 import { Sidebar } from "./component/sidebar";
 import { AdminEmpresas } from "./views/adminEmpresas";
@@ -117,6 +119,12 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/crearUsuario">
 							<CrearUsuario />
+						</Route>
+						<Route exact path="/empresasRubro">
+							<TotalEmpresasRubro />
+						</Route>
+						<Route exact path="/graficos">
+							<Graficos />
 						</Route>
 						<Route exact path="/usuarios/:username/editar">
 							<EditarUsuario />
