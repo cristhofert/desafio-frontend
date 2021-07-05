@@ -21,11 +21,11 @@ export const CrearUsuario = () => {
 						e.preventDefault();
 						actions
 							.crearUsuario({
-								nombre: nombre.current.value,
-								usuario: usuario.current.value,
+								name: nombre.current.value,
+								username: usuario.current.value,
 								email: email.current.value,
-								contrasenna: contrasenna.current.value,
-								esAdmin: esAdmin.current.value
+								password: contrasenna.current.value,
+								is_admin: esAdmin.current.value
 							})
 							.then(() => history.push("/usuarios"));
 					}}>

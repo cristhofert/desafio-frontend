@@ -26,7 +26,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			departamentos: [],
 			localidades: [],
 			empresas: [],
-			user: {}
+			user: {},
+			usuarioEditar: { name: "cargando..." }
 		},
 		actions: {
 			eliminarEmpresa: async RUT => {
@@ -47,6 +48,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				setStore({ empresas: nuevaEmpresa });
 			},
+			eliminarUsuario: async id => {
+				const store = getStore();
+
+				const res = await fetch(`${process.env.BACKEND_URL}/usuario/${id}`, { method: "DELETE" });
+				if (res.ok) {
+					setStore({
+						usuarios: store.usuarios.filter(u => {
+							return u.id != id;
+						})
+					});
+				}
+			},
 
 			eliminarAsociado: async (RUT, idPersona) => {
 				var myHeaders = new Headers();
@@ -59,9 +72,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				};
 
 				const res = await fetch(
-					process.env.BACKEND_URL +
-						`
-				/empresa_persona/${RUT}/${idPersona}`,
+					process.env.BACKEND_URL + `/empresa_persona/${RUT}/${idPersona}`,
 					requestOptions
 				);
 				if (res.ok) {
@@ -115,7 +126,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(result => setStore({ empresas: result }))
 					.catch(error => console.log("error", error));
 			},
-			getUsuarios: async () => {
+			getUsuarios: () => {
 				const store = getStore();
 				var myHeaders = new Headers();
 				myHeaders.append("Content-Type", "application/json");
@@ -210,9 +221,41 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(result => getActions().getMiEmpresa())
 					.catch(error => console.log("error", error));
 			},
+			actualizarUsuario: () => {
+				var myHeaders = new Headers();
+				myHeaders.append("Content-Type", "application/json");
+				myHeaders.append("Authorization", sessionStorage.getItem("token"));
+
+				var raw = JSON.stringify(getStore().usuarioEditar);
+				console.log(raw);
+
+				var requestOptions = {
+					method: "PUT",
+					headers: myHeaders,
+					body: raw,
+					redirect: "follow"
+				};
+
+				return fetch(`${process.env.BACKEND_URL}/user`, requestOptions)
+					.then(res => {
+						if (res.ok) res;
+						else throw res.json();
+					})
+					.then(response => response.json())
+					.then(result => getActions().getUsuarios())
+					.catch(error => console.log("error", error));
+			},
 			setEmpresa: empresa => {
 				const store = getStore();
 				setStore({ empresa: { ...store.empresa, ...empresa } });
+			},
+			setUsuario: e => {
+				const store = getStore();
+				setStore({ usuarioEditar: { ...store.usuarioEditar, [e.target.id]: e.target.value } });
+			},
+			setIsAdmin: value => {
+				const store = getStore();
+				setStore({ usuarioEditar: { ...store.usuarioEditar, is_admin: value } });
 			},
 			cargarDepartamentos: async () => {
 				let url = process.env.BACKEND_URL + "/departamento";
@@ -222,6 +265,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const res = await fetch(url, options);
 				const data = await res.json();
 				setStore({ departamentos: data });
+			},
+			getUsuario: async username => {
+				fetch(`${process.env.BACKEND_URL}/user/${username}`, { method: "GET" })
+					.then(res => res.json())
+					.then(data => setStore({ usuarioEditar: data }))
+					.catch(err => console.log(err));
 			},
 			agregarNuevaLocalidad: async (idDepartamento, nombre) => {
 				const store = getStore();

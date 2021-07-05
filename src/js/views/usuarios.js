@@ -47,7 +47,15 @@ export const Usuarios = () => {
 					</div>
 				</div>
 			</div>
-			<ListaDeItems tipo="usuarios" primerBoton="Editar" segundoBoton="eliminar" />
+			<ListaDeItems
+				tipo="usuarios"
+				primerBoton="Editar"
+				segundoBoton="eliminar"
+				primerBotonTo="/usuarios/:username/editar"
+				segundoBotonClick={(e, p) => {
+					actions.eliminarUsuario(p.username);
+				}}
+			/>
 		</div>
 	);
 };
