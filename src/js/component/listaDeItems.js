@@ -12,6 +12,19 @@ export const ListaDeItems = props => {
 			props.segundoBotonClick();
 		}
 	};
+
+	const primerBoton = itemLista => {
+		let button = "";
+		if (props.tipo == "rubros") {
+			button = props.primerBotonTo.replace(":nombre", itemLista.nombre);
+		} else if (props.tipo == "usuarios") {
+			button = props.primerBotonTo.replace(":username", itemLista.username);
+		} else {
+			button = props.primerBotonTo.replace(":id", itemLista.id);
+		}
+		return button;
+	};
+
 	return (
 		<div className="lista p-4 shadow my-2">
 			{store[props.tipo].length > 0 ? (
@@ -26,13 +39,7 @@ export const ListaDeItems = props => {
 							segundoBotonClick={() => {
 								handleClick(itemLista.id);
 							}}
-							primerBotonTo={
-								props.primerBotonTo
-									? props.primerBotonTo.replace(":nombre", itemLista.nombre) ||
-									  props.primerBotonTo.replace(":username", itemLista.username) ||
-									  props.primerBotonTo.replace(":id", itemLista.id)
-									: ""
-							}
+							primerBotonTo={primerBoton(itemLista)}
 							tipo={props.tipo}
 						/>
 					);
