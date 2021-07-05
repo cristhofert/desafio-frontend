@@ -1,31 +1,53 @@
 import React, { useEffect, useState } from "react";
-import { VictoryPie } from "victory";
+import { VictoryPie, VictoryBar, VictoryChart, VictoryAxis, VictoryTheme } from "victory";
 
 export const Graficos = () => {
 	const [activos, setActivos] = useState(0);
 	const [inactivos, setInactivos] = useState(0);
-	const peticion = async () => {
-		const peticion = await fetch(process.env.BACKEND_URL + "/empresa");
-		const respuesta = await peticion.json();
-		console.log(respuesta);
-		const numeroActivos = respuesta.filter(empresa => {
+	const [localidad, setLocalidad] = useState([]);
+
+	const getActivos = async () => {
+		const res = await fetch(process.env.BACKEND_URL + "/empresa");
+		const datos = await res.json();
+		const numeroActivos = datos.filter(empresa => {
 			return empresa.estado == true;
 		}).length;
 		setActivos(numeroActivos);
-		setInactivos(respuesta.length - numeroActivos);
+		setInactivos(datos.length - numeroActivos);
+	};
+
+	const getLocalidades = async () => {
+		const res = await fetch(process.env.BACKEND_URL + "/localidad/empresa");
+		const datos = await res.json();
+		const datosMap = await datos.map((localidad, index) => {
+			const objeto = {
+				x: index + 1,
+				y: localidad.empresa.length,
+				label: localidad.nombre + ": \n" + localidad.empresa.length
+			};
+			return objeto;
+		});
+		setLocalidad(datosMap);
+		console.log(datosMap);
+	};
+
+	const cargarDatos = async () => {
+		await getActivos();
+		await getLocalidades();
 	};
 	useEffect(() => {
-		peticion();
+		cargarDatos();
 	}, []);
 
 	return (
 		<div className="container">
 			<div className="row justify-content-center">
 				<div className="col-sm-12 col-md-6 mt-3 text-center">
-					<h1>Cantidad de empresas activas</h1>
+					<h1>Cantidad total de empresas activas</h1>
 					<VictoryPie
 						colorScale={["#0B8E73", "#05664F"]}
 						labelRadius={20}
+						height={300}
 						style={{ labels: { fontSize: 15, fill: "white" } }}
 						data={[
 							{
@@ -33,6 +55,19 @@ export const Graficos = () => {
 								y: activos
 							},
 							{ x: `Inactivas: ${inactivos}`, y: inactivos }
+						]}
+					/>
+				</div>
+			</div>
+			<div className="row justify-content-center">
+				<div className="col-sm-12 col-md-6 mt-3 text-center">
+					<h1>Cantidad total de empresas por localidad</h1>
+					<VictoryBar
+						data={localidad.length != 0 ? localidad : [{ x: 1, y: 2, label: "hola" }]}
+						events={[
+							{
+								target: "data"
+							}
 						]}
 					/>
 				</div>
