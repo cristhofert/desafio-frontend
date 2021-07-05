@@ -11,15 +11,19 @@ export const DepartamentoYLocalidad = props => {
 		if (store.departamentosYlocalidades.length == 0) {
 			await actions.cargarDepartamentosyLocalidades();
 		}
-		actions.setearDepYLoc(store.departamentosYlocalidades[0], {});
-		if (store.departamentosYlocalidades[seleccionado].localidades[0]) {
-			setLocalidadSeleccionada(store.departamentosYlocalidades[seleccionado].localidades[0]);
-			actions.setearDepYLoc(
-				store.departamentosYlocalidades[0],
-				store.departamentosYlocalidades[seleccionado].localidades[0]
-			);
+		if (store.departamentosYlocalidades.length != 0) {
+			actions.setearDepYLoc(store.departamentosYlocalidades[0], {});
+			if (store.departamentosYlocalidades[seleccionado].localidades[0]) {
+				setLocalidadSeleccionada(store.departamentosYlocalidades[seleccionado].localidades[0]);
+				actions.setearDepYLoc(
+					store.departamentosYlocalidades[0],
+					store.departamentosYlocalidades[seleccionado].localidades[0]
+				);
+			}
+			setDatosDireccion(store.departamentosYlocalidades);
+		} else {
+			actions.setearDepYLoc({}, {});
 		}
-		setDatosDireccion(store.departamentosYlocalidades);
 	};
 
 	useEffect(() => {
