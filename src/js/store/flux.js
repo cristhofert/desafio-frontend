@@ -51,6 +51,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 				// }
 				setStore({ arregloFiltrado });
 			},
+			asignarEmpresa: async (RUT, username) => {
+				let url = process.env.BACKEND_URL + "/user-empresa/" + RUT;
+
+				const body = { username: username };
+				const bodyJSON = JSON.stringify(body);
+
+				let options = {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: bodyJSON
+				};
+
+				const res = await fetch(url, options);
+				return res.ok;
+			},
 			buscar: async (palabra, arreglo) => {
 				const store = getStore();
 				let propiedad = arreglo == "empresas" ? "nombre_fantasia" : "nombre";
@@ -71,7 +86,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				};
 				const res = await fetch(url, options);
 				const data = await res.json();
-				console.log(data);
 				return res.ok;
 			},
 			setearDepYLoc: (departamento, localidad) => {
@@ -152,7 +166,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			mapAsociados: async data => {
 				let asociados = [];
 				for (let index = 0; index < data.length; index++) {
-					const asociado = { ...data[index].persona, ...data[index].cargo };
+					const asociado = { ...data[index].persona, cargo: data[index].cargo };
 					asociados.push(asociado);
 				}
 				return asociados;
@@ -190,6 +204,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const res = await fetch(process.env.BACKEND_URL + "/empresa_persona/" + RUT, requestOptions);
 				const data = await res.json();
 				const asociados = await getActions().mapAsociados(data);
+				console.log(data, asociados);
 				setStore({ asociados: asociados });
 			},
 
@@ -306,7 +321,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				myHeaders.append("Authorization", sessionStorage.getItem("token"));
 
 				var raw = JSON.stringify(getStore().empresa);
-				console.log(raw);
 
 				var requestOptions = {
 					method: "PUT",
@@ -326,7 +340,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				myHeaders.append("Authorization", sessionStorage.getItem("token"));
 
 				var raw = JSON.stringify(getStore().usuarioEditar);
-				console.log(raw);
 
 				var requestOptions = {
 					method: "PUT",
@@ -350,7 +363,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				myHeaders.append("Authorization", sessionStorage.getItem("token"));
 
 				var raw = JSON.stringify({ nombre: nombre, nombre_nuevo: getStore().rubro });
-				console.log(raw);
 
 				var requestOptions = {
 					method: "PUT",
@@ -441,7 +453,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const departamento = await store.departamentosYlocalidades.find(departamento => {
 					return departamento.nombre == nombre;
 				});
-				console.log(departamento);
 				setStore({ localidades: departamento.localidades });
 			},
 			agregarNuevaLocalidad: async (idDepartamento, nombre) => {
@@ -535,7 +546,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				setStore({ rubros: nuevoRubros });
 			},
-			getMiAsociados: () => {
+			getMiAsociados: async () => {
 				var myHeaders = new Headers();
 				myHeaders.append("Content-Type", "application/json");
 				myHeaders.append("Authorization", sessionStorage.getItem("token"));
@@ -546,11 +557,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 					redirect: "follow"
 				};
 
-				return fetch(process.env.BACKEND_URL + "/asociados/", requestOptions)
-					.then(res => res.json())
-					.then(data => getActions().mapAsociados(data))
-					.then(asociados => setStore({ asociados }))
-					.catch(err => err);
+				const res = await fetch(process.env.BACKEND_URL + "/mi_empresa/asociados", requestOptions);
+				const data = await res.json();
+				const asociados = await getActions().mapAsociados(data);
+				setStore({ asociados: asociados });
+				setStore({ arregloFiltrado: asociados });
+				return res.ok;
 			},
 			agregarMiAsociado: (cargo, personaId) => {
 				var myHeaders = new Headers();

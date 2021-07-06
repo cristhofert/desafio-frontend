@@ -132,6 +132,9 @@ const Layout = () => {
 						<Route exact path="/crearUsuario">
 							<CrearUsuario />
 						</Route>
+						<Route exact path="/crearUsuario/:RUT">
+							<CrearUsuario />
+						</Route>
 						<Route exact path="/empresasRubro">
 							<TotalEmpresasRubro />
 						</Route>
