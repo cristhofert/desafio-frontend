@@ -11,7 +11,23 @@ export const CrearUsuario = () => {
 	const usuario = useRef(null);
 	const contrasenna = useRef(null);
 	const esAdmin = useRef(null);
+	const params = useParams();
 
+	const crearUsuario = async () => {
+		await actions.crearUsuario({
+			name: nombre.current.value,
+			username: usuario.current.value,
+			email: email.current.value,
+			password: contrasenna.current.value,
+			is_admin: esAdmin.current.value
+		});
+		if (params.RUT) {
+			const ok = await actions.asignarEmpresa(params.RUT, usuario.current.value);
+			history.push("/usuarios");
+		} else {
+			history.push("/usuarios");
+		}
+	};
 	return (
 		<div className="container">
 			<h1 className="text-center mt-2">Crear Usuario</h1>
@@ -19,15 +35,7 @@ export const CrearUsuario = () => {
 				<form
 					onSubmit={e => {
 						e.preventDefault();
-						actions
-							.crearUsuario({
-								name: nombre.current.value,
-								username: usuario.current.value,
-								email: email.current.value,
-								password: contrasenna.current.value,
-								is_admin: esAdmin.current.value
-							})
-							.then(() => history.push("/usuarios"));
+						crearUsuario();
 					}}>
 					<div className="form-group">
 						<label className="label-claro" htmlFor="Nombre">

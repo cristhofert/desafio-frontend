@@ -20,7 +20,6 @@ export const ItemDeLista = props => {
 
 	const agregarAsociado = async idAsociado => {
 		const res = await actions.agregarAsociadoAEmpresa(params.id, idAsociado, cargo);
-		console.log(res);
 	};
 	return (
 		<>
@@ -50,7 +49,7 @@ export const ItemDeLista = props => {
 
 						{props.tipo == "empresas" ? (
 							<>
-								<Link to="/crearUsuario" className="btn botonOutline m-1">
+								<Link to={`/crearUsuario/${props.itemLista.RUT}`} className="btn botonOutline m-1">
 									Crear Usuario
 								</Link>
 								<Link

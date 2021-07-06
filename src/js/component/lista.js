@@ -5,7 +5,7 @@ import { ItemDeLista } from "./itemDeLista";
 
 export const Lista = props => {
 	const { store, actions } = useContext(Context);
-	const nombreArreglo = props.tipo == "agregarAsociados" ? "personas" : props.tipo;
+
 	return (
 		<div className="lista p-4 shadow my-2">
 			{store.arregloFiltrado.length != 0 ? (
