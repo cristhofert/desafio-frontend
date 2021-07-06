@@ -2,6 +2,8 @@ import React, { useState, useContext, useEffect } from "react";
 import rigoImage from "../../img/rigo-baby.jpg";
 import { Context } from "../store/appContext";
 import { useHistory } from "react-router-dom";
+import { DepartamentoYLocalidad } from "../component/departamentoYLocalidad";
+import { Rubro } from "../component/rubro";
 
 export const EditarPerfilEmpresa = () => {
 	const { store, actions } = useContext(Context);
@@ -15,8 +17,25 @@ export const EditarPerfilEmpresa = () => {
 		<div className="container">
 			<div className="row">
 				<div className="col-4">
-					<div className="w-75 h-100 bg-dark">
-						<i className="fa fa-plus" aria-hidden="true" />
+					<div className="d-flex flex-column justify-content-center align-items-center">
+						<img
+							className="fotoPerfil mb-2"
+							src="https://www.logolynx.com/images/logolynx/e5/e5ba79334133d2cb362dd639f755a392.png"
+							alt="logo empresa"
+						/>
+						<div className="input-group mb-3">
+							<div className="custom-file">
+								<input
+									type="file"
+									className="custom-file-input"
+									id="inputGroupFile01"
+									aria-describedby="fotoPerfil"
+								/>
+								<label className="custom-file-label" htmlFor="inputGroupFile01">
+									Añadir imagen
+								</label>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div className="col-8">
@@ -94,16 +113,7 @@ export const EditarPerfilEmpresa = () => {
 									value={store.empresa.nro_BPS}
 								/>
 							</div>
-							<div className="form-group col-md-6">
-								<label htmlFor="inputPassword4">Rubro de actividad principal</label>
-								<input
-									type="text"
-									className="form-control"
-									id="inputPassword4"
-									onChange={e => actions.setEmpresa({ actividad_principal: e.target.value })}
-									value={store.empresa.actividad_principal}
-								/>
-							</div>
+							<Rubro clases={"form-group col-md-6"} label={"Rubro de actividad principal"} />
 							<div className="form-group col-md-6">
 								<label htmlFor="inputEmail4">Numero de referencia</label>
 								<input
@@ -114,16 +124,7 @@ export const EditarPerfilEmpresa = () => {
 									value={store.empresa.nro_referencia}
 								/>
 							</div>
-							<div className="form-group col-md-6">
-								<label htmlFor="inputPassword4">Rubro de actividad secundaria</label>
-								<input
-									type="text"
-									className="form-control"
-									id="inputPassword4"
-									onChange={e => actions.setEmpresa({ actividad_secunadria: e.target.value })}
-									value={store.empresa.actividad_secunadria}
-								/>
-							</div>
+							<Rubro clases={"form-group col-md-6"} label={"Rubro de actividad secundaria"} />
 							<div className="form-group col-md-6">
 								<label htmlFor="inputEmail4">Fecha de afiliación</label>
 								<input
@@ -136,36 +137,7 @@ export const EditarPerfilEmpresa = () => {
 									value={store.empresa.fecha_afiliacion}
 								/>
 							</div>
-							<div className="form-group col-md-3">
-								<label htmlFor="inputPassword4">Departamento</label>
-								<select id="departamento" className="form-control" required>
-									<option value="MONTEVIDEO">MONTEVIDEO</option>
-									<option value="ARTIGAS">ARTIGAS</option>
-									<option value="CANELONES">CANELONES</option>
-									<option value="CERRO LARGO">CERRO LARGO</option>
-									<option value="COLONIA">COLONIA</option>
-									<option value="DURAZNO">DURAZNO</option>
-									<option value="FLORES">FLORES</option>
-									<option value="FLORIDA">FLORIDA</option>
-									<option value="LAVALLEJA">LAVALLEJA</option>
-									<option value="MALDONADO">MALDONADO</option>
-									<option value="PAYSANDU">PAYSANDU</option>
-									<option value="RIO NEGRO">RIO NEGRO</option>
-									<option value="RIVERA">RIVERA</option>
-									<option value="ROCHA">ROCHA</option>
-									<option value="SALTO">SALTO</option>
-									<option value="SAN JOSE">SAN JOSE</option>
-									<option value="SORIANO">SORIANO</option>
-									<option value="TACUAREMBO">TACUAREMBO</option>
-									<option value="TREINTA Y TRES">TREINTA Y TRES</option>
-								</select>
-							</div>
-							<div className="form-group col-md-3">
-								<label htmlFor="inputPassword4">Localidad</label>
-								<select id="departamento" className="form-control" required>
-									<option value="MONTEVIDEO">MONTEVIDEO</option>
-								</select>
-							</div>
+							<DepartamentoYLocalidad clases={"form-group col-md-3"} />
 							<div className="form-group col-md-6">
 								<label htmlFor="inputEmail4">Fecha de Inicio Empresa</label>
 								<input

@@ -7,11 +7,15 @@ export const Asociado = () => {
 	const { store, actions } = useContext(Context);
 	const [alert, setAlert] = useState("");
 
+	const cargarDatos = () => {
+		const ok = actions.getMiAsociados();
+		if (!ok) {
+			setAlert("Error al cargar los datos");
+		}
+	};
+
 	useEffect(() => {
-		actions
-			.getMiAsociados()
-			.then(ok => console.log(ok))
-			.catch(err => setAlert(err));
+		cargarDatos();
 	}, []);
 
 	return (
