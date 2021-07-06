@@ -12,11 +12,23 @@ export const AdminEmpresas = () => {
 
 	const cargarDatos = async () => {
 		await actions.getEmpresas();
-		await actions.cargarBuscador("empresas", { estado, localidad: store.departamentoYLocalidad.localidad });
+		console.log("ñ", store.departamentoYLocalidad.localidad);
+		const localidad = store.departamentoYLocalidad.localidad ? store.departamentoYLocalidad.localidad.nombre : "";
+		console.log("locali: ", localidad);
+		actions.cargarBuscador("empresas", {
+			estado,
+			localidad,
+			actividad_principal: store.robro,
+			actividad_secunadria: store.robro
+		});
 	};
-	useEffect(() => {
-		cargarDatos();
-	}, []);
+
+	useEffect(
+		() => {
+			cargarDatos();
+		},
+		[estado, store.departamentoYLocalidad.localidad, store.robro]
+	);
 
 	return (
 		<div className="container">
@@ -47,7 +59,7 @@ export const AdminEmpresas = () => {
 						value={estado}
 						onChange={e => {
 							if (e.target.value === "true") setEstado(true);
-							else if (e.target.value === "true") setEstado(false);
+							else if (e.target.value === "false") setEstado(false);
 							else setEstado("");
 						}}>
 						<option value="">Estado</option>
