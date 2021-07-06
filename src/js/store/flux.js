@@ -41,14 +41,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 			cargarBuscador: async (arreglo, filtros) => {
 				const store = getStore();
 				let arregloFiltrado = store[arreglo];
-				if (filtro) {
-					Object.keys(filtros).forEach(filtro => {
-						arregloFiltrado = arregloFiltrado.filter(item => {
-							if(filtro[filtro]==="") return true
-							return item[filtro] === filtro[filtro]
-						})
-					});
-				}
+				// if (filtros) {
+				// 	Object.keys(filtros).forEach(filtro => {
+				// 		arregloFiltrado = arregloFiltrado.filter(item => {
+				// 			if (filtro[filtro] === "" || filtro[filtro] === "Localidad") return true;
+				// 			return item[filtro] === filtro[filtro];
+				// 		});
+				// 	});
+				// }
 				setStore({ arregloFiltrado });
 			},
 			buscar: async (palabra, arreglo) => {
@@ -238,7 +238,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const data = await res.json();
 				setStore({ personas: data });
 			},
-			loadSomeData: async () => { },
+			loadSomeData: async () => {},
 			obtenerPersonaPorID: async id => {
 				const store = getStore();
 				const res = await store.personas.find(persona => {
@@ -418,8 +418,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				const res = await fetch(url, options);
 				const data = await res.json();
+				const store = getStore();
+				setStore({
+					departamentosYlocalidades: [
+						{
+							id: 0,
+							nombre: "Departamento",
+							localidades: [
+								{
+									id: 0,
+									nombre: "Localidad"
+								}
+							]
+						},
 
-				setStore({ departamentosYlocalidades: data });
+						...data
+					]
+				});
 			},
 			obtenerLocalidadesPorNombre: async nombre => {
 				const store = getStore();

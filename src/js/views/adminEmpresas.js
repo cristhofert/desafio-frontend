@@ -7,11 +7,11 @@ import { Buscador } from "../component/buscador";
 
 export const AdminEmpresas = () => {
 	const { store, actions } = useContext(Context);
-	const [estado, setEstado] = useState("")
+	const [estado, setEstado] = useState("");
 
 	const cargarDatos = async () => {
 		await actions.getEmpresas();
-		await actions.cargarBuscador("empresas", { estado, localidad: store.departamentoYLocalidad.localidad});
+		await actions.cargarBuscador("empresas", { estado, localidad: store.departamentoYLocalidad.localidad });
 	};
 	useEffect(() => {
 		cargarDatos();
@@ -19,39 +19,6 @@ export const AdminEmpresas = () => {
 
 	return (
 		<div className="container">
-			<div>
-				<ul className="menu p-0 my-auto">
-					<li>
-						<a href="#">
-							<i className="fa fa-bars mr-2" />
-							Reportes
-						</a>
-						<ul className="submenu">
-							<li>
-								<a href="#">Cantidad total de empresas activas</a>
-							</li>
-							<li>
-								<a href="#">Cantidad total de empresas por rubro de actividad</a>
-							</li>
-							<li>
-								<a href="#">Listado de empresas por rubro de actividad</a>
-							</li>
-							<li>
-								<a href="#">Cantidad total de empresas por localidad</a>
-							</li>
-							<li>
-								<a href="#">Altas y bajas del mes</a>
-							</li>
-							<li>
-								<a href="#">Aniversario de empresas por mes</a>
-							</li>
-							<li>
-								<a href="#">Listado de emprendedores por rubro de actividad</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</div>
 			<div className="row">
 				<div className="col-sm-12 col-md-9">
 					<Buscador tipo={"empresas"} placeholderBuscador={"Buscar Empresa"} />
@@ -73,13 +40,16 @@ export const AdminEmpresas = () => {
 				</div>
 				<DepartamentoYLocalidad clases={"col-sm-12 col-md-3"} />
 				<div className="col-sm-12 col-md-3">
-					<select id="Estado" className="form-control my-1" value={estado} onChange={
-						e => {
-							if (e.target.value === "true") setEstado(true)
-							else if (e.target.value === "true") setEstado(false)
-							else setEstado("")
+					<select
+						id="Estado"
+						className="form-control my-1"
+						value={estado}
+						onChange={e => {
+							if (e.target.value === "true") setEstado(true);
+							else if (e.target.value === "true") setEstado(false);
+							else setEstado("");
 						}}>
-						<option value="" >Estado</option>
+						<option value="">Estado</option>
 						<option value="true">Activa</option>
 						<option value="false">Desactivada</option>
 					</select>
