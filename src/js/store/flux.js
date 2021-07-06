@@ -38,9 +38,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 			setRubro: e => {
 				setStore({ rubro: e.target.value });
 			},
-			cargarBuscador: async arreglo => {
+			cargarBuscador: async (arreglo, filtros) => {
 				const store = getStore();
-				setStore({ arregloFiltrado: store[arreglo] });
+				let arregloFiltrado = store[arreglo];
+				if (filtro) {
+					Object.keys(filtros).forEach(filtro => {
+						arregloFiltrado = arregloFiltrado.filter(item => {
+							if(filtro[filtro]==="") return true
+							return item[filtro] === filtro[filtro]
+						})
+					});
+				}
+				setStore({ arregloFiltrado });
 			},
 			buscar: async (palabra, arreglo) => {
 				const store = getStore();
@@ -229,7 +238,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const data = await res.json();
 				setStore({ personas: data });
 			},
-			loadSomeData: async () => {},
+			loadSomeData: async () => { },
 			obtenerPersonaPorID: async id => {
 				const store = getStore();
 				const res = await store.personas.find(persona => {

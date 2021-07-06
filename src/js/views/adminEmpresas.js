@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { Lista } from "../component/lista";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
@@ -7,10 +7,11 @@ import { Buscador } from "../component/buscador";
 
 export const AdminEmpresas = () => {
 	const { store, actions } = useContext(Context);
+	const [estado, setEstado] = useState("")
 
 	const cargarDatos = async () => {
 		await actions.getEmpresas();
-		await actions.cargarBuscador("empresas");
+		await actions.cargarBuscador("empresas", { estado, localidad: store.departamentoYLocalidad.localidad});
 	};
 	useEffect(() => {
 		cargarDatos();
@@ -72,9 +73,15 @@ export const AdminEmpresas = () => {
 				</div>
 				<DepartamentoYLocalidad clases={"col-sm-12 col-md-3"} />
 				<div className="col-sm-12 col-md-3">
-					<select id="Estado" className="form-control my-1">
-						<option>Estado</option>
-						<option>...</option>
+					<select id="Estado" className="form-control my-1" value={estado} onChange={
+						e => {
+							if (e.target.value === "true") setEstado(true)
+							else if (e.target.value === "true") setEstado(false)
+							else setEstado("")
+						}}>
+						<option value="" >Estado</option>
+						<option value="true">Activa</option>
+						<option value="false">Desactivada</option>
 					</select>
 				</div>
 				<div className="col-sm-12 col-md-3">
