@@ -41,14 +41,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 			cargarBuscador: async (arreglo, filtros) => {
 				const store = getStore();
 				let arregloFiltrado = store[arreglo];
-				// if (filtros) {
-				// 	Object.keys(filtros).forEach(filtro => {
-				// 		arregloFiltrado = arregloFiltrado.filter(item => {
-				// 			if (filtro[filtro] === "" || filtro[filtro] === "Localidad") return true;
-				// 			return item[filtro] === filtro[filtro];
-				// 		});
-				// 	});
-				// }
+				if (filtros) {
+					Object.keys(filtros).forEach(filtro => {
+						if (
+							filtros[filtro] !== "" &&
+							filtros[filtro] !== "Localidad" &&
+							typeof filtros[filtro] !== "undefined"
+						) {
+							console.log("f:", filtro, " v: ", filtros[filtro]);
+							arregloFiltrado = arregloFiltrado.filter(item => {
+								if (typeof item[filtro] === "object") return item[filtro].nombre === filtros[filtro];
+								else return item[filtro] === filtros[filtro];
+							});
+						}
+					});
+				}
 				setStore({ arregloFiltrado });
 			},
 			asignarEmpresa: async (RUT, username) => {
