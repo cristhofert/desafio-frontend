@@ -17,8 +17,12 @@ export const PerfilEmpresa = () => {
 		<div className="container">
 			<div className="row">
 				<div className="col-4">
-					<div className="w-75 h-100 bg-dark">
-						<i className="fa fa-plus" aria-hidden="true" />
+					<div className="d-flex flex-column justify-content-center align-items-center">
+						<img
+							className="fotoPerfil mb-2"
+							src="https://www.logolynx.com/images/logolynx/e5/e5ba79334133d2cb362dd639f755a392.png"
+							alt="logo empresa"
+						/>
 					</div>
 				</div>
 				<div className="col-8 d-flex">

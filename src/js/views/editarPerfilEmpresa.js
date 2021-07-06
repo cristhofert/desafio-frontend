@@ -3,6 +3,7 @@ import rigoImage from "../../img/rigo-baby.jpg";
 import { Context } from "../store/appContext";
 import { useHistory } from "react-router-dom";
 import { DepartamentoYLocalidad } from "../component/departamentoYLocalidad";
+import { Rubro } from "../component/rubro";
 
 export const EditarPerfilEmpresa = () => {
 	const { store, actions } = useContext(Context);
@@ -16,8 +17,25 @@ export const EditarPerfilEmpresa = () => {
 		<div className="container">
 			<div className="row">
 				<div className="col-4">
-					<div className="w-75 h-100 bg-dark">
-						<i className="fa fa-plus" aria-hidden="true" />
+					<div className="d-flex flex-column justify-content-center align-items-center">
+						<img
+							className="fotoPerfil mb-2"
+							src="https://www.logolynx.com/images/logolynx/e5/e5ba79334133d2cb362dd639f755a392.png"
+							alt="logo empresa"
+						/>
+						<div className="input-group mb-3">
+							<div className="custom-file">
+								<input
+									type="file"
+									className="custom-file-input"
+									id="inputGroupFile01"
+									aria-describedby="fotoPerfil"
+								/>
+								<label className="custom-file-label" htmlFor="inputGroupFile01">
+									Añadir imagen
+								</label>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div className="col-8">
@@ -95,16 +113,7 @@ export const EditarPerfilEmpresa = () => {
 									value={store.empresa.nro_BPS}
 								/>
 							</div>
-							<div className="form-group col-md-6">
-								<label htmlFor="inputPassword4">Rubro de actividad principal</label>
-								<input
-									type="text"
-									className="form-control"
-									id="inputPassword4"
-									onChange={e => actions.setEmpresa({ actividad_principal: e.target.value })}
-									value={store.empresa.actividad_principal}
-								/>
-							</div>
+							<Rubro clases={"form-group col-md-6"} label={"Rubro de actividad principal"} />
 							<div className="form-group col-md-6">
 								<label htmlFor="inputEmail4">Numero de referencia</label>
 								<input
@@ -115,16 +124,7 @@ export const EditarPerfilEmpresa = () => {
 									value={store.empresa.nro_referencia}
 								/>
 							</div>
-							<div className="form-group col-md-6">
-								<label htmlFor="inputPassword4">Rubro de actividad secundaria</label>
-								<input
-									type="text"
-									className="form-control"
-									id="inputPassword4"
-									onChange={e => actions.setEmpresa({ actividad_secunadria: e.target.value })}
-									value={store.empresa.actividad_secunadria}
-								/>
-							</div>
+							<Rubro clases={"form-group col-md-6"} label={"Rubro de actividad secundaria"} />
 							<div className="form-group col-md-6">
 								<label htmlFor="inputEmail4">Fecha de afiliación</label>
 								<input
