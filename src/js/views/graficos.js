@@ -20,7 +20,10 @@ export const Graficos = () => {
 	const getLocalidades = async () => {
 		const res = await fetch(process.env.BACKEND_URL + "/localidad/empresa");
 		const datos = await res.json();
-		const datosMap = await datos.map((localidad, index) => {
+		const datosFilter = await datos.filter(dato => {
+			return dato.empresa.length != 0;
+		});
+		const datosMap = await datosFilter.map((localidad, index) => {
 			const objeto = {
 				x: index + 1,
 				y: localidad.empresa.length,
@@ -35,7 +38,10 @@ export const Graficos = () => {
 	const getRubros = async () => {
 		const res = await fetch(process.env.BACKEND_URL + "/rubro");
 		const datos = await res.json();
-		const datosMap = await datos.map((rubro, index) => {
+		const datosFilter = await datos.filter(rubro => {
+			return rubro.empresa.length != 0 || rubro.empresaSecundaria.length != 0;
+		});
+		const datosMap = await datosFilter.map((rubro, index) => {
 			const objeto = {
 				x: index + 1,
 				y: parseInt(rubro.empresa.length) + parseInt(rubro.empresaSecundaria.length),

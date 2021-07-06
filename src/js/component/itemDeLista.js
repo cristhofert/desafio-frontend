@@ -58,11 +58,9 @@ export const ItemDeLista = props => {
 									className="btn botonOutline m-1">
 									Asociados
 								</Link>
-								<Link>
-									<button type="button" className="btn botonOutline m-1">
-										Editar
-									</button>
-								</Link>
+								<button type="button" className="btn botonOutline m-1">
+									Editar
+								</button>
 								<button
 									type="button"
 									className="btn botonOutline m-1"
