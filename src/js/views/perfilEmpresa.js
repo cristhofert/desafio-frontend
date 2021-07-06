@@ -5,8 +5,12 @@ import { Link } from "react-router-dom";
 export const PerfilEmpresa = () => {
 	const { store, actions } = useContext(Context);
 
+	const cargarDatos = async () => {
+		await actions.getMiEmpresa();
+	};
+
 	useEffect(() => {
-		actions.getMiEmpresa();
+		cargarDatos();
 	}, []);
 
 	return (
@@ -78,15 +82,15 @@ export const PerfilEmpresa = () => {
 						</div>
 						<div>
 							<h4>Rubro de actividad principal</h4>
-							<p>{store.empresa.actividad_principal}</p>
+							<p>{store.empresa.actividad_principal ? store.empresa.actividad_principal.nombre : ""}</p>
 						</div>
 						<div>
 							<h4>Rubro de actividad secundaria</h4>
-							<p>{store.empresa.actividad_secunadria}</p>
+							<p>{store.empresa.actividad_secundaria ? store.empresa.actividad_secundaria.nombre : ""}</p>
 						</div>
 						<div>
 							<h4>Estado</h4>
-							<p>{store.empresa.estado}</p>
+							<p>{store.empresa.estado ? "Activo" : "Inactivo"}</p>
 						</div>
 					</div>
 				</div>

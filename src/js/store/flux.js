@@ -16,7 +16,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				nro_BPS: "Cargando...",
 				nro_referencia: "Cargando...",
 				actividad_principal: "Cargando...",
-				actividad_secunadria: "Cargando...",
+				actividad_secundaria: "Cargando...",
 				fecha_afiliacion: "2021-07-15",
 				fecha_inicio_empresa: "2021-07-15",
 				estado: "Cargando...",
@@ -299,7 +299,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ rubros: [...store.rubros, data] });
 				return res.ok;
 			},
-			getMiEmpresa: () => {
+			getMiEmpresa: async () => {
 				var myHeaders = new Headers();
 				myHeaders.append("Content-Type", "application/json");
 				myHeaders.append("Authorization", sessionStorage.getItem("token"));
@@ -310,10 +310,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					redirect: "follow"
 				};
 
-				fetch(`${process.env.BACKEND_URL}/mi_empresa`, requestOptions)
-					.then(response => response.json())
-					.then(result => setStore({ empresa: result }))
-					.catch(error => console.error("error", error));
+				const res = await fetch(`${process.env.BACKEND_URL}/mi_empresa`, requestOptions);
+				const data = await res.json();
+				console.log(data);
+				setStore({ empresa: data });
 			},
 			actualizarMiEmpresa: () => {
 				var myHeaders = new Headers();

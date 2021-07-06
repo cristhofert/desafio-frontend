@@ -43,7 +43,11 @@ export const Login = props => {
 											setAlert("Usuario o contraseña equivocado");
 										} else {
 											props.activarSidebar(true);
-											history.push("/empresas");
+											if (store.user.is_admin) {
+												history.push("/empresas");
+											} else {
+												history.push("/asociados");
+											}
 										}
 									}}
 									className="w-75">
