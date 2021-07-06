@@ -4,6 +4,7 @@ import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 import { DepartamentoYLocalidad } from "../component/departamentoYLocalidad";
 import { Buscador } from "../component/buscador";
+import { Rubro } from "../component/rubro";
 
 export const AdminEmpresas = () => {
 	const { store, actions } = useContext(Context);
@@ -54,12 +55,7 @@ export const AdminEmpresas = () => {
 						<option value="false">Desactivada</option>
 					</select>
 				</div>
-				<div className="col-sm-12 col-md-3">
-					<select id="Rubro" className="form-control my-1">
-						<option>Rubro</option>
-						<option>...</option>
-					</select>
-				</div>
+				<Rubro clases="col-sm-12 col-md-3" label={false} />
 			</div>
 			<Lista tipo="empresas" />
 		</div>
